@@ -1,12 +1,9 @@
-import net from "net";
+import { Server } from "net";
+import { EventLoop } from "./event";
+import { createServer } from "./server";
 
-const server = net.createServer((socket: net.Socket) => {
-  console.log("listening");
-  socket.write("Echo server\r\n");
-  socket.pipe(socket);
-});
-server.on("error", (err: Error) => {
-  console.log(err.message);
-});
-
+const eventLoop: EventLoop = new EventLoop();
+const server: Server = createServer(eventLoop);
 server.listen(6379, "127.0.0.1");
+
+eventLoop.startProcessingLoop();
