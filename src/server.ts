@@ -1,7 +1,6 @@
 import { Server, Socket } from "net";
 import { LoopEventHandler, EventLoop, LoopEvent } from "./event";
-import { CLRF } from "./commands/resp/util";
-import { decodeClientCommandArray } from "./commands/resp";
+import { parseCommandBuffer } from "./commands/resp";
 
 export function createServer(eventLoop: EventLoop): Server {
   const server: Server = new Server();
@@ -23,26 +22,16 @@ interface EventSocketHandler extends LoopEventHandler<Socket> {
 
 export const acceptConnectionHandler: EventSocketHandler = (socket: Socket) => {
   console.log(`Registered new socket: ${JSON.stringify(socket.address())}`);
-  socket.on("data", (data) => {
+  socket.on("data", (data: Buffer) => {
     socket.write("Echo server\r\n");
-    const commands: string[] = decodeClientCommandArray(data);
+    const commands = parseCommandBuffer(data);
     console.log(`COMMANDS: ${commands}`);
     if (commands.length === 0) {
       return;
     }
 
-    commands.forEach((command: string, index: number) => {
-      if (command === "PING") {
-        if (
-          commands[index + 1] &&
-          commands[index + 1] !== commands[index + 1].toUpperCase()
-        ) {
-          socket.write(`+${commands[index + 1]}${CLRF}`);
-        } else {
-          socket.write(`+PONG${CLRF}`);
-        }
-      }
-    });
+    // TODO: Push each command into event loop
+    commands.forEach((command: string, index: number) => {});
   });
 
   socket.on("end", () => {

@@ -6,11 +6,12 @@ import { warn } from "console";
 export class EventLoop {
   private stop: boolean;
   private events: LoopEvent<any>[];
-  private processed: LoopEvent<any>[];
+  // TODO: Implement timed events: https://redis.io/docs/latest/operate/oss_and_stack/reference/internals/internals-rediseventlib/
+  private _fired: LoopEvent<any>[];
 
   constructor() {
     this.events = [];
-    this.processed = [];
+    this._fired = [];
     this.stop = false;
   }
 
@@ -34,8 +35,6 @@ export class EventLoop {
         } else {
           event.handler(event.object);
         }
-
-        this.processed.push(event);
       }
 
       //NOTE: sleep for 1s for debug, need an alternative method of not swamping CPU in a loop
@@ -46,13 +45,6 @@ export class EventLoop {
   public stopProcessingLoop() {
     this.stop = true;
   }
-}
-
-// TODO: Is this useful in our implementation? (I.E. one not based on file descriptors / streams)
-// TODO: Most likely will be handled by std abstractions for sockets, files and memory
-export enum EventType {
-  READ = 1,
-  WRITE = 2,
 }
 
 export interface LoopEvent<T> {
