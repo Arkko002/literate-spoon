@@ -1,4 +1,6 @@
-enum RESPType {
+import { RESPError, RESPErrorKind } from "./error";
+
+export enum RESPType {
   SIMPLE_STRING = "+",
   ERROR = "-",
   INTEGER = ":",
@@ -6,7 +8,7 @@ enum RESPType {
   ARRAY = "*",
 }
 
-interface RESP<T> {
+export interface RESP<T> {
   type: RESPType;
   raw: Buffer;
   data: T | null;
@@ -17,8 +19,6 @@ const CL: Buffer = Buffer.from("\r");
 const RF: Buffer = Buffer.from("\n");
 
 // TODO: Refactor
-// TODO: Better parsing error reporting
-// TODO: Buffer to integer casting, endianess between machines
 // NOTE: Validation rules based on:
 // https://redis.io/docs/latest/develop/interact/programmability/triggers-and-functions/concepts/resp_js_conversion/
 // https://redis.io/docs/latest/develop/reference/protocol-spec/
@@ -31,25 +31,33 @@ export const parseCommandBuffer = (
   }
 
   let commandPointer = 0;
-  const lineEndIndex: number = input.indexOf(RF[0], commandPointer);
+  const lineEndIndex: number = input.indexOf(RF, commandPointer);
   if (!(input[lineEndIndex - 1] === CL[0])) {
-    return [];
+    throw new RESPError(
+      `Invalid carriage return closing: ${input.toString("ascii")}`,
+      RESPErrorKind.INVALID_CARRIAGE_RETURN,
+    );
   }
 
-  const respType: RESPType =
-    RESPType[input.toString("ascii", 0, 1) as keyof typeof RESPType];
+  const respType: RESPType = input.toString("ascii", 0, 1) as RESPType;
   if (respType === undefined) {
-    return [];
+    throw new RESPError(
+      `Unsupported / invalid RESP type: ${input.toString("ascii")}`,
+      RESPErrorKind.INVALID_RESP_TYPE,
+    );
   }
 
-  const respRaw: Buffer = input.subarray(0, lineEndIndex);
-  const respData: Buffer = input.subarray(1, lineEndIndex - 2);
+  const respRaw: Buffer = input.subarray(0, lineEndIndex + 1);
+  const respData: Buffer = input.subarray(1, lineEndIndex - 1);
 
   switch (respType) {
     case RESPType.SIMPLE_STRING: {
       for (let i = 0; i < respData.length; i++) {
         if (respData[i] === CL[0] || respData[i] === RF[0]) {
-          return [];
+          throw new RESPError(
+            `Carriage return inside of string: ${input.toString("ascii")}`,
+            RESPErrorKind.STRING_WITH_CARRIAGE_RETURN,
+          );
         }
       }
 
@@ -59,6 +67,7 @@ export const parseCommandBuffer = (
         data: respData.toString("ascii"),
       });
 
+      commandPointer = lineEndIndex + 1;
       break;
     }
 
@@ -68,9 +77,14 @@ export const parseCommandBuffer = (
         raw: respRaw,
         data: respData.toString("ascii"),
       });
+      commandPointer = lineEndIndex + 1;
+      break;
     case RESPType.INTEGER: {
       if (!respData.length) {
-        return [];
+        throw new RESPError(
+          `Empty integer: ${input.toString("ascii")}`,
+          RESPErrorKind.INTEGER_EMPTY,
+        );
       }
 
       if (
@@ -78,96 +92,139 @@ export const parseCommandBuffer = (
           respData.toString("ascii", 0, 1) === "+") &&
         respData.length === 1
       ) {
-        return [];
+        throw new RESPError(
+          `Signed integer without value: ${input.toString("ascii")}`,
+          RESPErrorKind.INTEGER_EMPTY,
+        );
       }
 
-      // TODO: Is this a good validation method for 0..9?
-      for (let i = 0; i < respData.length; i++) {
-        const value = Number(respData[i]);
-        if (value < 0 || value > 9) {
-          return [];
-        }
+      const data: number = Number(respData.toString("ascii"));
+      if (Number.isNaN(data)) {
+        throw new RESPError(
+          `Invalid integer: ${input.toString("ascii")}`,
+          RESPErrorKind.INTEGER_NOT_NUMBER,
+        );
       }
+      commandPointer = lineEndIndex + 1;
 
       commandsResult.push({
         type: respType,
         raw: respRaw,
-        data: Number(respData),
+        data,
       });
 
       break;
     }
 
     case RESPType.BULK_STRING: {
-      if (respData.length === -1) {
+      const bulkStringLength: number = Number(respData.toString("ascii"));
+      if (Number.isNaN(bulkStringLength)) {
+        throw new RESPError(
+          `Invalid bulk string length: ${input.toString("ascii")}`,
+          RESPErrorKind.BULK_STRING_DECLARED_LENGTH_WRONG,
+        );
+      }
+      if (bulkStringLength === -1) {
         commandsResult.push({
           type: respType,
           raw: respRaw,
           data: null,
         });
-      } else if (!respData.length) {
+      } else if (!bulkStringLength) {
         commandsResult.push({
           type: respType,
           raw: respRaw,
           data: "",
         });
-      } else if (input.length < lineEndIndex + Number(respData) + 2) {
-        return [];
+      } else if (input.length < lineEndIndex + bulkStringLength) {
+        throw new RESPError(
+          `Not enough data for bulk string: ${input.toString("ascii")}`,
+          RESPErrorKind.BULK_STRING_NOT_ENOUGH_DATA,
+        );
       } else if (
-        input[lineEndIndex + Number(respData)] !== CL[0] ||
-        input[lineEndIndex + Number(respData) + 1] !== RF[0]
+        input[lineEndIndex + bulkStringLength + 1] !== CL[0] ||
+        input[lineEndIndex + bulkStringLength + 2] !== RF[0]
       ) {
-        // TODO: Test if should be respData or respData + 1 / respData + 2
-        return [];
+        throw new RESPError(
+          `Invalid carriage return: ${input.toString("ascii")}`,
+          RESPErrorKind.INVALID_CARRIAGE_RETURN,
+        );
       } else {
-        const bulkStringEndIndex: number = input
-          .subarray(lineEndIndex)
-          .indexOf(CLRF);
+        const bulkStringEndIndex: number = input.indexOf(RF, lineEndIndex + 1);
+
+        if (
+          bulkStringEndIndex === -1 ||
+          input[bulkStringEndIndex - 1] !== CL[0]
+        ) {
+          throw new RESPError(
+            `Invalid carriage return: ${input.toString("ascii")}`,
+            RESPErrorKind.INVALID_CARRIAGE_RETURN,
+          );
+        }
 
         const bulkString: string = input.toString(
           "ascii",
           lineEndIndex + 1,
-          bulkStringEndIndex - 2,
+          bulkStringEndIndex - 1,
         );
 
-        if (bulkString.length !== Number(respData)) {
-          return [];
+        if (bulkString.length !== bulkStringLength) {
+          throw new RESPError(
+            `Bulk string declared length wrong: ${input.toString("ascii")}`,
+            RESPErrorKind.BULK_STRING_DECLARED_LENGTH_WRONG,
+          );
         }
+
+        commandPointer = bulkStringEndIndex + 1;
 
         commandsResult.push({
           type: respType,
-          raw: respRaw,
+          raw: input.subarray(0, bulkStringEndIndex + 1),
           data: bulkString,
         });
       }
+      break;
     }
-    case RESPType.ARRAY:
-      // TODO: Is this a good validation method for 0..9?
-      for (let i = 0; i < respData.length; i++) {
-        const value = Number(respData[i]);
-        if (value < 0 || value > 9) {
-          return [];
+    case RESPType.ARRAY: {
+      const arrayLength: number = Number(respData.toString("ascii"));
+      if (Number.isNaN(arrayLength)) {
+        throw new RESPError(
+          `Invalid array length: ${input.toString("ascii")}`,
+          RESPErrorKind.ARRAY_DECLARED_LENGTH_WRONG,
+        );
+      }
+
+      let arrayLastElementEndLineIndex: number = lineEndIndex + 1;
+      for (let i = 0; i <= arrayLength; i++) {
+        arrayLastElementEndLineIndex = input.indexOf(
+          RF,
+          arrayLastElementEndLineIndex + 1,
+        );
+
+        if (
+          arrayLastElementEndLineIndex === -1 ||
+          input[arrayLastElementEndLineIndex - 1] !== CL[0]
+        ) {
+          throw new RESPError(
+            `Invalid array length: ${input.toString("ascii")}`,
+            RESPErrorKind.ARRAY_DECLARED_LENGTH_WRONG,
+          );
         }
       }
 
-      const numberOfElements: number = respData.readInt32LE(0);
-      let arrayLastElementEndLineIndex: number = lineEndIndex + 1;
-      for (let i = 1; i <= numberOfElements; i++) {
-        arrayLastElementEndLineIndex = input
-          .subarray(arrayLastElementEndLineIndex)
-          .indexOf(RF);
-      }
+      commandPointer = arrayLastElementEndLineIndex + 1;
 
       commandsResult.push({
         type: respType,
-        raw: respRaw,
+        raw: input.subarray(0, arrayLastElementEndLineIndex + 1),
         data: parseCommandBuffer(
-          input.subarray(lineEndIndex + 1, arrayLastElementEndLineIndex),
+          input.subarray(lineEndIndex + 1, arrayLastElementEndLineIndex + 1),
           [],
         ),
       });
+      break;
+    }
   }
 
-  commandPointer = lineEndIndex + 1;
   return parseCommandBuffer(input.subarray(commandPointer), commandsResult);
 };

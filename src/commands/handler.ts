@@ -1,20 +1,18 @@
 import { LoopEventHandler } from "../event";
-import { decodeClientCommandArray } from "./resp";
 
 // TODO: Create EventCommands from RESP<T>
-function decodeCommands(commandsBuffer: Buffer): CommandEvent[] {
-  const commandsStringArray: string[] =
-    decodeClientCommandArray(commandsBuffer);
-  console.log(`COMMANDS: ${commandsStringArray}`);
-  if (commandsStringArray.length === 0) {
-    return [];
-  }
-
-    commandsStringArray.map((inputString: string): CommandEvent => {
-    })
-
-  return commandsStringArray;
-}
+// function decodeCommands(commandsBuffer: Buffer): CommandEvent[] {
+//   const commandsStringArray: string[] =
+//     decodeClientCommandArray(commandsBuffer);
+//   console.log(`COMMANDS: ${commandsStringArray}`);
+//   if (commandsStringArray.length === 0) {
+//     return [];
+//   }
+//
+//   commandsStringArray.map((inputString: string): CommandEvent => {});
+//
+//   return commandsStringArray;
+// }
 
 export interface CommandEvent {
   name: CommandName;
@@ -44,11 +42,11 @@ const eventCommandHandler: EventCommandHandler = (command: CommandEvent) => {
   }
 };
 
-export const handleRawCommand = (inputBuffer: Buffer): CommandEvent {
+export const handleRawCommand = (inputBuffer: Buffer): CommandEvent => {
   const command: CommandEvent = {
-	name: CommandName.PING,
-	args: [],
-	output: undefined,
+    name: CommandName.PING,
+    args: [],
+    output: undefined,
   };
   return command;
-}
+};
