@@ -1,24 +1,13 @@
 import { describe, expect, test } from "@jest/globals";
-import { RESP, RESPType, parseCommandBuffer } from ".";
+import { RESP, RESPType, parseCommandBuffer } from "./parser";
+import { RESPError, RESPErrorKind } from "./error";
 
-describe("RESP module", () => {
-  test("should parse simple string buffer", () => {
-    const respRaw: Buffer = Buffer.from("+OK\r\n");
-    const respData: string = "OK";
-    const respType: RESPType = RESPType.SIMPLE_STRING;
-
-    const result: RESP<string>[] = parseCommandBuffer(respRaw);
-
-    expect(result.length).toBe(1);
-    expect(result[0].type).toBe(respType);
-    expect(result[0].data).toBe(respData);
-    expect(result[0].raw).toStrictEqual(respRaw);
-  });
-
-  test("should parse error buffer", () => {
+// TODO: Should edge cases of simple string also apply?
+describe("Error parser", () => {
+  const respType: RESPType = RESPType.ERROR;
+  test("it parses error buffer", () => {
     const respRaw: Buffer = Buffer.from("-Error message\r\n");
     const respData: string = "Error message";
-    const respType: RESPType = RESPType.ERROR;
 
     const result: RESP<string>[] = parseCommandBuffer(respRaw);
 
@@ -27,11 +16,14 @@ describe("RESP module", () => {
     expect(result[0].data).toBe(respData);
     expect(result[0].raw).toStrictEqual(respRaw);
   });
+});
 
-  test("should parse integer buffer", () => {
+describe("Integer parser", () => {
+  const respType: RESPType = RESPType.INTEGER;
+
+  test("it parses integer buffer", () => {
     const respRaw: Buffer = Buffer.from(":123\r\n");
     const respData: number = 123;
-    const respType: RESPType = RESPType.INTEGER;
 
     const result: RESP<number>[] = parseCommandBuffer(respRaw);
 
@@ -40,10 +32,51 @@ describe("RESP module", () => {
     expect(result[0].data).toBe(respData);
   });
 
-  test("should parse bulk string buffer", () => {
+  test("it throws an error on empty signed integer", () => {
+    expect.assertions(2);
+    const respRaw: Buffer = Buffer.from(":-\r\n");
+
+    try {
+      parseCommandBuffer(respRaw);
+    } catch (er) {
+      const error = er as RESPError;
+      expect(error).toBeInstanceOf(RESPError);
+      expect(error.kind).toBe(RESPErrorKind.INTEGER_NOT_NUMBER);
+    }
+  });
+
+  test("it throws an error on empty integer buffer", () => {
+    expect.assertions(2);
+    const respRaw: Buffer = Buffer.from(":\r\n");
+
+    try {
+      parseCommandBuffer(respRaw);
+    } catch (er) {
+      const error = er as RESPError;
+      expect(error).toBeInstanceOf(RESPError);
+      expect(error.kind).toBe(RESPErrorKind.INTEGER_NOT_NUMBER);
+    }
+  });
+  test("it throws an error when integer is not a number", () => {
+    expect.assertions(2);
+    const respRaw: Buffer = Buffer.from(":test\r\n");
+
+    try {
+      parseCommandBuffer(respRaw);
+    } catch (er) {
+      const error = er as RESPError;
+      expect(error).toBeInstanceOf(RESPError);
+      expect(error.kind).toBe(RESPErrorKind.INTEGER_NOT_NUMBER);
+    }
+  });
+});
+
+describe("Bulk string parser", () => {
+  const respType: RESPType = RESPType.BULK_STRING;
+
+  test("it parses bulk string buffer", () => {
     const respRaw: Buffer = Buffer.from("$5\r\nhello\r\n");
     const respData: string = "hello";
-    const respType: RESPType = RESPType.BULK_STRING;
 
     const result: RESP<string>[] = parseCommandBuffer(respRaw);
 
@@ -53,12 +86,77 @@ describe("RESP module", () => {
     expect(result[0].raw).toStrictEqual(respRaw);
   });
 
-  test("should parse array buffer", () => {
+  test("it parses empty bulk string buffer", () => {
+    const respRaw: Buffer = Buffer.from("$0\r\n\r\n");
+    const respData: string = "";
+
+    const result: RESP<string>[] = parseCommandBuffer(respRaw);
+
+    expect(result.length).toBe(1);
+    expect(result[0].type).toBe(respType);
+    expect(result[0].data).toBe(respData);
+    expect(result[0].raw).toStrictEqual(respRaw);
+  });
+
+  test("it parses null bulk string buffer", () => {
+    const respRaw: Buffer = Buffer.from("$-1\r\n");
+    const respData: null = null;
+
+    const result: RESP<string>[] = parseCommandBuffer(respRaw);
+
+    expect(result.length).toBe(1);
+    expect(result[0].type).toBe(respType);
+    expect(result[0].data).toBe(respData);
+    expect(result[0].raw).toStrictEqual(respRaw);
+  });
+
+  test("it throws an error when not enough data in buffer", () => {
+    expect.assertions(2);
+    const respRaw: Buffer = Buffer.from("$10\r\nhello\r\n");
+
+    try {
+      parseCommandBuffer(respRaw);
+    } catch (er) {
+      const error = er as RESPError;
+      expect(error).toBeInstanceOf(RESPError);
+      expect(error.kind).toBe(RESPErrorKind.BULK_STRING_NOT_ENOUGH_DATA);
+    }
+  });
+
+  test("it throws an error when declared length is wrong", () => {
+    expect.assertions(2);
+    const respRaw: Buffer = Buffer.from("$3\r\nhello\r\n");
+
+    try {
+      parseCommandBuffer(respRaw);
+    } catch (er) {
+      const error = er as RESPError;
+      expect(error).toBeInstanceOf(RESPError);
+      expect(error.kind).toBe(RESPErrorKind.BULK_STRING_DECLARED_LENGTH_WRONG);
+    }
+  });
+
+  test("it throws an error when declared length is negative other than -1", () => {
+    expect.assertions(2);
+    const respRaw: Buffer = Buffer.from("$-10\r\nhello\r\n");
+
+    try {
+      parseCommandBuffer(respRaw);
+    } catch (er) {
+      const error = er as RESPError;
+      expect(error).toBeInstanceOf(RESPError);
+      expect(error.kind).toBe(RESPErrorKind.BULK_STRING_DECLARED_LENGTH_WRONG);
+    }
+  });
+});
+
+describe("Array parser", () => {
+  const arrayType: RESPType = RESPType.ARRAY;
+
+  test("it parses array buffer", () => {
     const arrayRaw: Buffer = Buffer.from(
       "*4\r\n$5\r\nhello\r\n+world\r\n:123\r\n-Error message\r\n",
     );
-    const arrayType: RESPType = RESPType.ARRAY;
-
     const bulkStringRaw: Buffer = Buffer.from("$5\r\nhello\r\n");
     const bulkStringType: RESPType = RESPType.BULK_STRING;
 
@@ -84,5 +182,123 @@ describe("RESP module", () => {
     expect(result[0].type).toBe(arrayType);
     expect(result[0].data).toStrictEqual(respArrayData);
     expect(result[0].raw).toStrictEqual(arrayRaw);
+  });
+
+  test("it parses empty array buffer", () => {
+    const arrayRaw: Buffer = Buffer.from("*0\r\n");
+    const respArrayData: RESP<any>[] = [];
+
+    const result = parseCommandBuffer(arrayRaw);
+
+    expect(result.length).toBe(1);
+    expect(result[0].type).toBe(arrayType);
+    expect(result[0].data).toStrictEqual(respArrayData);
+    expect(result[0].raw).toStrictEqual(arrayRaw);
+  });
+
+  test("it parses null array buffer", () => {
+    const respRaw: Buffer = Buffer.from("*-1\r\n");
+    const respData: null = null;
+
+    const result: RESP<string>[] = parseCommandBuffer(respRaw);
+
+    expect(result.length).toBe(1);
+    expect(result[0].type).toBe(arrayType);
+    expect(result[0].data).toBe(respData);
+    expect(result[0].raw).toStrictEqual(respRaw);
+  });
+
+  test("it throws an error when length is not a number", () => {
+    expect.assertions(2);
+    const arrayRaw: Buffer = Buffer.from("*test\r\n");
+
+    try {
+      parseCommandBuffer(arrayRaw);
+    } catch (er) {
+      const error = er as RESPError;
+      expect(error).toBeInstanceOf(RESPError);
+      expect(error.kind).toBe(RESPErrorKind.ARRAY_DECLARED_LENGTH_WRONG);
+    }
+  });
+
+  test("it throws an error when length is negative other than -1", () => {
+    expect.assertions(2);
+    const arrayRaw: Buffer = Buffer.from("*-10\r\n");
+
+    try {
+      parseCommandBuffer(arrayRaw);
+    } catch (er) {
+      const error = er as RESPError;
+      expect(error).toBeInstanceOf(RESPError);
+      expect(error.kind).toBe(RESPErrorKind.ARRAY_DECLARED_LENGTH_WRONG);
+    }
+  });
+
+  test("it throws an error on invalid carriage return in last element", () => {
+    expect.assertions(2);
+    const arrayRaw: Buffer = Buffer.from("*2\r\n:123\r\n-Error message\n");
+
+    try {
+      parseCommandBuffer(arrayRaw);
+    } catch (er) {
+      const error = er as RESPError;
+      expect(error).toBeInstanceOf(RESPError);
+      expect(error.kind).toBe(RESPErrorKind.INVALID_CARRIAGE_RETURN);
+    }
+  });
+
+  test("it throws an error on invalid carriage return inside of array", () => {
+    expect.assertions(2);
+    const arrayRaw: Buffer = Buffer.from("*2\r\n:123\n-Error message\r\n");
+
+    try {
+      parseCommandBuffer(arrayRaw);
+    } catch (er) {
+      const error = er as RESPError;
+      expect(error).toBeInstanceOf(RESPError);
+      expect(error.kind).toBe(RESPErrorKind.INVALID_CARRIAGE_RETURN);
+    }
+  });
+});
+
+describe("Simple string parser", () => {
+  const respType: RESPType = RESPType.SIMPLE_STRING;
+
+  test("it parses simple string buffer", () => {
+    const respRaw: Buffer = Buffer.from("+OK\r\n");
+    const respData: string = "OK";
+
+    const result: RESP<string>[] = parseCommandBuffer(respRaw);
+
+    expect(result.length).toBe(1);
+    expect(result[0].type).toBe(respType);
+    expect(result[0].data).toBe(respData);
+    expect(result[0].raw).toStrictEqual(respRaw);
+  });
+
+  test("it throws an error on invalid carriage return", () => {
+    expect.assertions(2);
+    const respRaw: Buffer = Buffer.from("+OK\r");
+
+    try {
+      parseCommandBuffer(respRaw);
+    } catch (er) {
+      const error = er as RESPError;
+      expect(error).toBeInstanceOf(RESPError);
+      expect(error.kind).toBe(RESPErrorKind.INVALID_CARRIAGE_RETURN);
+    }
+  });
+
+  test("it throws an error if data contains carriage return", () => {
+    expect.assertions(2);
+    const respRaw: Buffer = Buffer.from("+\r\r\n");
+
+    try {
+      parseCommandBuffer(respRaw);
+    } catch (er) {
+      const error = er as RESPError;
+      expect(error).toBeInstanceOf(RESPError);
+      expect(error.kind).toBe(RESPErrorKind.INVALID_CARRIAGE_RETURN);
+    }
   });
 });
