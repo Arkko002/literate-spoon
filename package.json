@@ -1,14 +1,19 @@
 {
   "name": "redos",
   "version": "1.0.0",
-  "description": "",
+  "description": "Redis server and client implementation in Node.JS / TypeScript",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Arkko002/redos"
+  },
   "scripts": {
     "test": "jest",
+    "test:ci": "jest --silent --ci --coverage --json --outputFile ./test-result.json",
     "build": "tsc -p ./tsconfig.json"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Arkko",
+  "license": "MIT",
   "devDependencies": {
     "@jest/globals": "^29.7.0",
     "@types/jest": "^29.5.12",
