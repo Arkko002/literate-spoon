@@ -1,6 +1,7 @@
 import { describe, expect, test } from "@jest/globals";
 import { RESP, RESPType, parseCommandBuffer } from "./parser";
-import { RESPError, RESPErrorKind } from "./error";
+import { CustomError } from "../../error";
+import { RESPErrorKind } from "./resp.error";
 
 // TODO: Should edge cases of simple string also apply?
 describe("Error parser", () => {
@@ -9,7 +10,7 @@ describe("Error parser", () => {
     const respRaw: Buffer = Buffer.from("-Error message\r\n");
     const respData: string = "Error message";
 
-    const result: RESP<string>[] = parseCommandBuffer(respRaw);
+    const result: RESP[] = parseCommandBuffer(respRaw);
 
     expect(result.length).toBe(1);
     expect(result[0].type).toBe(respType);
@@ -25,7 +26,7 @@ describe("Integer parser", () => {
     const respRaw: Buffer = Buffer.from(":123\r\n");
     const respData: number = 123;
 
-    const result: RESP<number>[] = parseCommandBuffer(respRaw);
+    const result: RESP[] = parseCommandBuffer(respRaw);
 
     expect(result.length).toBe(1);
     expect(result[0].type).toBe(respType);
@@ -39,8 +40,8 @@ describe("Integer parser", () => {
     try {
       parseCommandBuffer(respRaw);
     } catch (er) {
-      const error = er as RESPError;
-      expect(error).toBeInstanceOf(RESPError);
+      const error = er as CustomError;
+      expect(error).toBeInstanceOf(CustomError);
       expect(error.kind).toBe(RESPErrorKind.INTEGER_NOT_NUMBER);
     }
   });
@@ -52,8 +53,8 @@ describe("Integer parser", () => {
     try {
       parseCommandBuffer(respRaw);
     } catch (er) {
-      const error = er as RESPError;
-      expect(error).toBeInstanceOf(RESPError);
+      const error = er as CustomError;
+      expect(error).toBeInstanceOf(CustomError);
       expect(error.kind).toBe(RESPErrorKind.INTEGER_NOT_NUMBER);
     }
   });
@@ -64,13 +65,14 @@ describe("Integer parser", () => {
     try {
       parseCommandBuffer(respRaw);
     } catch (er) {
-      const error = er as RESPError;
-      expect(error).toBeInstanceOf(RESPError);
+      const error = er as CustomError;
+      expect(error).toBeInstanceOf(CustomError);
       expect(error.kind).toBe(RESPErrorKind.INTEGER_NOT_NUMBER);
     }
   });
 });
 
+// TODO: Test for case where bulk string contains /r or /n in data (should be allowed)
 describe("Bulk string parser", () => {
   const respType: RESPType = RESPType.BULK_STRING;
 
@@ -78,7 +80,7 @@ describe("Bulk string parser", () => {
     const respRaw: Buffer = Buffer.from("$5\r\nhello\r\n");
     const respData: string = "hello";
 
-    const result: RESP<string>[] = parseCommandBuffer(respRaw);
+    const result: RESP[] = parseCommandBuffer(respRaw);
 
     expect(result.length).toBe(1);
     expect(result[0].type).toBe(respType);
@@ -90,7 +92,7 @@ describe("Bulk string parser", () => {
     const respRaw: Buffer = Buffer.from("$0\r\n\r\n");
     const respData: string = "";
 
-    const result: RESP<string>[] = parseCommandBuffer(respRaw);
+    const result: RESP[] = parseCommandBuffer(respRaw);
 
     expect(result.length).toBe(1);
     expect(result[0].type).toBe(respType);
@@ -102,7 +104,7 @@ describe("Bulk string parser", () => {
     const respRaw: Buffer = Buffer.from("$-1\r\n");
     const respData: null = null;
 
-    const result: RESP<string>[] = parseCommandBuffer(respRaw);
+    const result: RESP[] = parseCommandBuffer(respRaw);
 
     expect(result.length).toBe(1);
     expect(result[0].type).toBe(respType);
@@ -117,8 +119,8 @@ describe("Bulk string parser", () => {
     try {
       parseCommandBuffer(respRaw);
     } catch (er) {
-      const error = er as RESPError;
-      expect(error).toBeInstanceOf(RESPError);
+      const error = er as CustomError;
+      expect(error).toBeInstanceOf(CustomError);
       expect(error.kind).toBe(RESPErrorKind.BULK_STRING_NOT_ENOUGH_DATA);
     }
   });
@@ -130,8 +132,8 @@ describe("Bulk string parser", () => {
     try {
       parseCommandBuffer(respRaw);
     } catch (er) {
-      const error = er as RESPError;
-      expect(error).toBeInstanceOf(RESPError);
+      const error = er as CustomError;
+      expect(error).toBeInstanceOf(CustomError);
       expect(error.kind).toBe(RESPErrorKind.BULK_STRING_DECLARED_LENGTH_WRONG);
     }
   });
@@ -143,8 +145,8 @@ describe("Bulk string parser", () => {
     try {
       parseCommandBuffer(respRaw);
     } catch (er) {
-      const error = er as RESPError;
-      expect(error).toBeInstanceOf(RESPError);
+      const error = er as CustomError;
+      expect(error).toBeInstanceOf(CustomError);
       expect(error.kind).toBe(RESPErrorKind.BULK_STRING_DECLARED_LENGTH_WRONG);
     }
   });
@@ -169,7 +171,7 @@ describe("Array parser", () => {
     const errorRaw: Buffer = Buffer.from("-Error message\r\n");
     const errorType: RESPType = RESPType.ERROR;
 
-    const respArrayData: RESP<any>[] = [
+    const respArrayData: RESP[] = [
       { type: bulkStringType, data: "hello", raw: bulkStringRaw },
       { type: simpleStringType, data: "world", raw: simpleStringRaw },
       { type: integerType, data: 123, raw: integerRaw },
@@ -186,7 +188,7 @@ describe("Array parser", () => {
 
   test("it parses empty array buffer", () => {
     const arrayRaw: Buffer = Buffer.from("*0\r\n");
-    const respArrayData: RESP<any>[] = [];
+    const respArrayData: RESP[] = [];
 
     const result = parseCommandBuffer(arrayRaw);
 
@@ -200,7 +202,7 @@ describe("Array parser", () => {
     const respRaw: Buffer = Buffer.from("*-1\r\n");
     const respData: null = null;
 
-    const result: RESP<string>[] = parseCommandBuffer(respRaw);
+    const result: RESP[] = parseCommandBuffer(respRaw);
 
     expect(result.length).toBe(1);
     expect(result[0].type).toBe(arrayType);
@@ -215,8 +217,8 @@ describe("Array parser", () => {
     try {
       parseCommandBuffer(arrayRaw);
     } catch (er) {
-      const error = er as RESPError;
-      expect(error).toBeInstanceOf(RESPError);
+      const error = er as CustomError;
+      expect(error).toBeInstanceOf(CustomError);
       expect(error.kind).toBe(RESPErrorKind.ARRAY_DECLARED_LENGTH_WRONG);
     }
   });
@@ -228,8 +230,8 @@ describe("Array parser", () => {
     try {
       parseCommandBuffer(arrayRaw);
     } catch (er) {
-      const error = er as RESPError;
-      expect(error).toBeInstanceOf(RESPError);
+      const error = er as CustomError;
+      expect(error).toBeInstanceOf(CustomError);
       expect(error.kind).toBe(RESPErrorKind.ARRAY_DECLARED_LENGTH_WRONG);
     }
   });
@@ -241,8 +243,8 @@ describe("Array parser", () => {
     try {
       parseCommandBuffer(arrayRaw);
     } catch (er) {
-      const error = er as RESPError;
-      expect(error).toBeInstanceOf(RESPError);
+      const error = er as CustomError;
+      expect(error).toBeInstanceOf(CustomError);
       expect(error.kind).toBe(RESPErrorKind.INVALID_CARRIAGE_RETURN);
     }
   });
@@ -254,8 +256,8 @@ describe("Array parser", () => {
     try {
       parseCommandBuffer(arrayRaw);
     } catch (er) {
-      const error = er as RESPError;
-      expect(error).toBeInstanceOf(RESPError);
+      const error = er as CustomError;
+      expect(error).toBeInstanceOf(CustomError);
       expect(error.kind).toBe(RESPErrorKind.INVALID_CARRIAGE_RETURN);
     }
   });
@@ -268,7 +270,7 @@ describe("Simple string parser", () => {
     const respRaw: Buffer = Buffer.from("+OK\r\n");
     const respData: string = "OK";
 
-    const result: RESP<string>[] = parseCommandBuffer(respRaw);
+    const result: RESP[] = parseCommandBuffer(respRaw);
 
     expect(result.length).toBe(1);
     expect(result[0].type).toBe(respType);
@@ -283,8 +285,8 @@ describe("Simple string parser", () => {
     try {
       parseCommandBuffer(respRaw);
     } catch (er) {
-      const error = er as RESPError;
-      expect(error).toBeInstanceOf(RESPError);
+      const error = er as CustomError;
+      expect(error).toBeInstanceOf(CustomError);
       expect(error.kind).toBe(RESPErrorKind.INVALID_CARRIAGE_RETURN);
     }
   });
@@ -296,8 +298,8 @@ describe("Simple string parser", () => {
     try {
       parseCommandBuffer(respRaw);
     } catch (er) {
-      const error = er as RESPError;
-      expect(error).toBeInstanceOf(RESPError);
+      const error = er as CustomError;
+      expect(error).toBeInstanceOf(CustomError);
       expect(error.kind).toBe(RESPErrorKind.INVALID_CARRIAGE_RETURN);
     }
   });

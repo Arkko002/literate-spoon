@@ -1,9 +1,12 @@
-import { Socket } from "net";
-import { CommandEvent } from "./commands/handler";
-import { encodeClientCommandArray } from "./commands/resp";
-import { warn } from "console";
+export interface IEventLoop {
+  addEvent(event: LoopEvent<any>): void;
+  startProcessingLoop(): Promise<void>;
+  stopProcessingLoop(): void;
+}
 
-export class EventLoop {
+// TODO: Implement all queues and maintanance tasks
+// https://github.com/redis/redis/blob/unstable/src/ae.c#L342
+export class EventLoop implements IEventLoop {
   private stop: boolean;
   private events: LoopEvent<any>[];
   // TODO: Implement timed events: https://redis.io/docs/latest/operate/oss_and_stack/reference/internals/internals-rediseventlib/
@@ -15,7 +18,7 @@ export class EventLoop {
     this.stop = false;
   }
 
-  public addEvent(event: LoopEvent<any>) {
+  public addEvent(event: LoopEvent<any>): void {
     this.events.push(event);
   }
 
@@ -31,7 +34,8 @@ export class EventLoop {
 
       if (event) {
         if (event.isAsync) {
-          await event.handler(event.object);
+          // TODO: Implement async handlers
+          event.handler(event.object);
         } else {
           event.handler(event.object);
         }

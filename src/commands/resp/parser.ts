@@ -1,4 +1,5 @@
-import { RESPError, RESPErrorKind } from "./error";
+import { CustomError } from "../../error-handling";
+import { RESPErrorKind } from "./resp.error";
 
 export enum RESPType {
   SIMPLE_STRING = "+",
@@ -8,33 +9,42 @@ export enum RESPType {
   ARRAY = "*",
 }
 
-export interface RESP<T> {
+export interface RESP {
   type: RESPType;
   raw: Buffer;
-  data: T | null;
+  data: RESPData;
 }
 
-type ParsedRESP = { parsedRESP: RESP<any>; nextCommandPointer: number };
+// TODO: RESPData should not be exposed outside of this, map this into primitive values when moving out of parser
+export type RESPData = RESP[] | string | number | boolean | null;
+
+type RESPPartial = { parsedRESP: RESP; nextCommandPointer: number };
 
 const CL: Buffer = Buffer.from("\r");
 const RF: Buffer = Buffer.from("\n");
 
+export interface RESPParser {
+  (input: Buffer): RESP[];
+}
+
 // NOTE: Validation rules based on:
 // https://redis.io/docs/latest/develop/interact/programmability/triggers-and-functions/concepts/resp_js_conversion/
 // https://redis.io/docs/latest/develop/reference/protocol-spec/
-export const parseCommandBuffer = (
-  input: Buffer,
-  commandsResult: RESP<any>[] = [],
-): RESP<any>[] => {
+export const parseCommandBuffer: RESPParser = (input: Buffer): RESP[] => {
+  const commandsResult: RESP[] = [];
   if (!input.length) {
     return commandsResult;
   }
 
+  return parse(input, commandsResult);
+};
+
+export const parse = (input: Buffer, commandsResult: RESP[] = []): RESP[] => {
   let commandPointer = 0;
   const lineEndIndex: number = getNextLineEndIndex(input, commandPointer);
   const respType: RESPType = input.toString("ascii", 0, 1) as RESPType;
   if (respType === undefined) {
-    throw new RESPError(
+    throw new CustomError(
       `Unsupported / invalid RESP type: ${input.toString("ascii")}`,
       RESPErrorKind.INVALID_RESP_TYPE,
     );
@@ -63,7 +73,7 @@ export const parseCommandBuffer = (
       commandPointer = lineEndIndex + 1;
       break;
     case RESPType.INTEGER: {
-      const integer: ParsedRESP = parseInteger(
+      const integer: RESPPartial = parseInteger(
         respData,
         respRaw,
         input,
@@ -74,7 +84,7 @@ export const parseCommandBuffer = (
       break;
     }
     case RESPType.BULK_STRING: {
-      const bulkString: ParsedRESP = parseBulkString(
+      const bulkString: RESPPartial = parseBulkString(
         respData,
         input,
         lineEndIndex,
@@ -84,7 +94,7 @@ export const parseCommandBuffer = (
       break;
     }
     case RESPType.ARRAY: {
-      const array: ParsedRESP = parseArray(
+      const array: RESPPartial = parseArray(
         respData,
         respRaw,
         input,
@@ -96,20 +106,20 @@ export const parseCommandBuffer = (
     }
   }
 
-  return parseCommandBuffer(input.subarray(commandPointer), commandsResult);
+  return parse(input.subarray(commandPointer), commandsResult);
 };
 
 const getNextLineEndIndex = (resp: Buffer, startIndex: number): number => {
   const lineEndIndex: number = resp.indexOf(RF, startIndex);
   if (lineEndIndex === -1) {
-    throw new RESPError(
+    throw new CustomError(
       `Invalid carriage return: ${resp.toString("ascii")}`,
       RESPErrorKind.INVALID_CARRIAGE_RETURN,
     );
   }
 
   if (resp[lineEndIndex - 1] !== CL[0]) {
-    throw new RESPError(
+    throw new CustomError(
       `Invalid carriage return: ${resp.toString("ascii")}`,
       RESPErrorKind.INVALID_CARRIAGE_RETURN,
     );
@@ -118,7 +128,7 @@ const getNextLineEndIndex = (resp: Buffer, startIndex: number): number => {
   // NOTE: Covers cases like $5\rhello\r\n and $5\r\nhe\rlo\r\n
   const carriageReturnIndex: number = resp.indexOf(CL, startIndex);
   if (carriageReturnIndex !== lineEndIndex - 1) {
-    throw new RESPError(
+    throw new CustomError(
       `Invalid carriage return: ${resp.toString("ascii")}`,
       RESPErrorKind.INVALID_CARRIAGE_RETURN,
     );
@@ -132,7 +142,7 @@ const parseBulkString = (
   bulkStringLengthData: Buffer,
   input: Buffer,
   lineEndIndex: number,
-): ParsedRESP => {
+): RESPPartial => {
   const bulkStringLength: number = Number(
     bulkStringLengthData.toString("ascii"),
   );
@@ -141,7 +151,7 @@ const parseBulkString = (
     bulkStringLengthData.length === 0 ||
     bulkStringLength < -1
   ) {
-    throw new RESPError(
+    throw new CustomError(
       `Invalid bulk string length: ${input.toString("ascii")}`,
       RESPErrorKind.BULK_STRING_DECLARED_LENGTH_WRONG,
     );
@@ -151,7 +161,7 @@ const parseBulkString = (
       parsedRESP: {
         type: RESPType.BULK_STRING,
         raw: input.subarray(0, lineEndIndex + 1),
-        data: null,
+        data: false,
       },
       nextCommandPointer: lineEndIndex + 1,
     };
@@ -165,7 +175,7 @@ const parseBulkString = (
       nextCommandPointer: lineEndIndex + 3,
     };
   } else if (input.length < lineEndIndex + bulkStringLength) {
-    throw new RESPError(
+    throw new CustomError(
       `Not enough data for bulk string: ${input.toString("ascii")}`,
       RESPErrorKind.BULK_STRING_NOT_ENOUGH_DATA,
     );
@@ -182,7 +192,7 @@ const parseBulkString = (
     );
 
     if (bulkString.length !== bulkStringLength) {
-      throw new RESPError(
+      throw new CustomError(
         `Bulk string declared length wrong: ${input.toString("ascii")}`,
         RESPErrorKind.BULK_STRING_DECLARED_LENGTH_WRONG,
       );
@@ -205,10 +215,10 @@ const parseInteger = (
   respRaw: Buffer,
   input: Buffer,
   lineEndIndex: number,
-): ParsedRESP => {
+): RESPPartial => {
   const data: number = Number(respData.toString("ascii"));
   if (Number.isNaN(data) || respData.length === 0) {
-    throw new RESPError(
+    throw new CustomError(
       `Invalid integer: ${input.toString("ascii")}`,
       RESPErrorKind.INTEGER_NOT_NUMBER,
     );
@@ -230,10 +240,10 @@ const parseArray = (
   respRaw: Buffer,
   input: Buffer,
   lineEndIndex: number,
-): ParsedRESP => {
+): RESPPartial => {
   const arrayLength: number = Number(respData.toString("ascii"));
   if (Number.isNaN(arrayLength) || respData.length === 0 || arrayLength < -1) {
-    throw new RESPError(
+    throw new CustomError(
       `Invalid array length: ${input.toString("ascii")}`,
       RESPErrorKind.ARRAY_DECLARED_LENGTH_WRONG,
     );
@@ -251,7 +261,7 @@ const parseArray = (
       parsedRESP: {
         type: RESPType.ARRAY,
         raw: respRaw,
-        data: null,
+        data: false,
       },
       nextCommandPointer: lineEndIndex + 1,
     };
@@ -268,7 +278,7 @@ const parseArray = (
       parsedRESP: {
         type: RESPType.ARRAY,
         raw: input.subarray(0, arrayLastElementEndLineIndex + 1),
-        data: parseCommandBuffer(
+        data: parse(
           input.subarray(lineEndIndex + 1, arrayLastElementEndLineIndex + 1),
           [],
         ),
