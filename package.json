@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "jest",
-    "test:ci": "jest --silent --ci --coverage --json --outputFile ./test-result.json",
+    "test:ci": "jest --silent --ci --coverage",
     "build": "tsc -p ./tsconfig.json"
   },
   "author": "Arkko",
@@ -27,6 +27,7 @@
     "typescript": "^5.4.3"
   },
   "dependencies": {
-    "jest": "^29.7.0"
+    "jest": "^29.7.0",
+    "redis": "^4.6.14"
   }
 }
