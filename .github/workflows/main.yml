@@ -19,15 +19,21 @@ jobs:
         name: build-result
         path: ./dist
         if-no-files-found: error
-    - run: npm test:ci
-    - uses: actions/upload-artifact@v4
-      with:
-        name: test-result
-        path: ./test-result.json
-        if-no-files-found: error
+  test:
+      runs-on: ubuntu-latest
+      needs: build
+      steps:
+        - name: Test & publish code coverage
+          uses: paambaati/codeclimate-action@v6.0.0
+          env:
+            CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
+          with:
+            coverageCommand: npm run test:ci
+            coverageLocations: |
+              ${{github.workspace}}/*.lcov:lcov
   release:
     runs-on: ubuntu-latest
-    needs: build
+    needs: [build, test]
     permissions: write-all
     steps:
     - name: Set Dist Version
