@@ -1,20 +1,20 @@
 export interface IEventLoop {
   addEvent(event: LoopEvent<any>): void;
-  startProcessingLoop(): Promise<void>;
+  startProcessingLoop(): void;
   stopProcessingLoop(): void;
 }
 
+// TODO: 1. Start with blocking operations
+
 // TODO: Implement all queues and maintanance tasks
 // https://github.com/redis/redis/blob/unstable/src/ae.c#L342
+// TODO: Implement timed events: https://redis.io/docs/latest/operate/oss_and_stack/reference/internals/internals-rediseventlib/
 export class EventLoop implements IEventLoop {
   private stop: boolean;
   private events: LoopEvent<any>[];
-  // TODO: Implement timed events: https://redis.io/docs/latest/operate/oss_and_stack/reference/internals/internals-rediseventlib/
-  private _fired: LoopEvent<any>[];
 
   constructor() {
     this.events = [];
-    this._fired = [];
     this.stop = false;
   }
 
@@ -22,8 +22,7 @@ export class EventLoop implements IEventLoop {
     this.events.push(event);
   }
 
-  public async startProcessingLoop(): Promise<void> {
-    console.log("START PROCESSING LOOP");
+  public startProcessingLoop(): void {
     if (this.stop) {
       this.stop = false;
     }
@@ -33,21 +32,23 @@ export class EventLoop implements IEventLoop {
       console.log(`EVENT: ${JSON.stringify(event)}`);
 
       if (event) {
-        if (event.isAsync) {
-          // TODO: Implement async handlers
-          event.handler(event.object);
-        } else {
-          event.handler(event.object);
-        }
+        event.handler(event.object, this);
+      } else {
+        // TODO: Break mechanism for blocking task processing
+        break;
       }
-
-      //NOTE: sleep for 1s for debug, need an alternative method of not swamping CPU in a loop
-      await new Promise((resolve) => setTimeout(resolve, 1000));
     }
+
+    return;
   }
 
-  public stopProcessingLoop() {
+  public stopProcessingLoop(): void {
     this.stop = true;
+  }
+
+  private wait(ms: number): void {
+    const start = Date.now();
+    while (Date.now() - start < ms);
   }
 }
 
@@ -59,14 +60,14 @@ export interface LoopEvent<T> {
 }
 
 export interface LoopEventHandler<T> {
-  (data: T): void;
+  (data: T, eventLoop: IEventLoop): void;
 }
 
-export interface StopEventLoopHandler extends LoopEventHandler<EventLoop> {
+export interface StopLoopEventHandler extends LoopEventHandler<EventLoop> {
   (eventLoop: EventLoop): void;
 }
 
-export const stopEventLoopHandler: StopEventLoopHandler = (
+export const stopEventLoopHandler: StopLoopEventHandler = (
   eventLoop: EventLoop,
 ) => {
   console.log(`Event loop stopped`);

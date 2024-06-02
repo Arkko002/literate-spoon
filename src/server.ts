@@ -1,5 +1,5 @@
 import { Server, Socket } from "net";
-import { LoopEventHandler, EventLoop, LoopEvent } from "./event";
+import { LoopEventHandler, EventLoop, LoopEvent, IEventLoop } from "./event";
 // import { parseCommandBuffer } from "./commands/resp";
 
 // TODO: https://github.com/redis/redis/blob/unstable/src/connection.c
@@ -11,7 +11,7 @@ export function createServer(eventLoop: EventLoop): Server {
     const acceptSocketEvent: LoopEvent<Socket> = {
       object: socket,
       isAsync: false,
-      handler: acceptConnectionHandler,
+      handler: socketConnectionHandler,
     };
     eventLoop.addEvent(acceptSocketEvent);
   });
@@ -19,27 +19,29 @@ export function createServer(eventLoop: EventLoop): Server {
   return server;
 }
 
-interface EventSocketHandler extends LoopEventHandler<Socket> {
-  (data: Socket): void;
+interface SocketEventHandler extends LoopEventHandler<Socket> {
+  (data: Socket, eventLoop: IEventLoop): void;
 }
 
-export const acceptConnectionHandler: EventSocketHandler = (socket: Socket) => {
-  console.log(`Registered new socket: ${JSON.stringify(socket.address())}`);
-  socket.on("data", (data: Buffer) => {
-    socket.write("Echo server\r\n");
-    // const commands = parseCommandBuffer(data);
-    // console.log(`COMMANDS: ${commands}`);
-    // if (commands.length === 0) {
-    //   return;
-    // }
+export const socketConnectionHandler: SocketEventHandler = (
+  socket: Socket,
+  eventLoop: IEventLoop,
+) => {
+  console.log(`Processing socket: ${JSON.stringify(socket.address())}`);
+  const data: Buffer | null = socket.read();
 
-    // TODO: Push each command into event loop
-    // commands.forEach((command: string, index: number) => {});
+  if (socket.closed) {
+    return;
+  }
+
+  if (data) {
+    // TODO: Parse data and handle it by Command
+    // TODO: Write response data to socket / add output event to queue for additional formatting in RESP
+  }
+
+  eventLoop.addEvent({
+    object: socket,
+    isAsync: false,
+    handler: socketConnectionHandler,
   });
-
-  socket.on("end", () => {
-    console.log("Connection ended");
-  });
-
-  socket.pipe(socket);
 };
