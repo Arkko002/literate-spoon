@@ -1,11 +1,17 @@
-import { CustomError, Err, Ok, Result } from "../../error-handling";
-import { EventLoop, LoopEventHandler } from "../../event";
-import { Command, CommandArgument } from "../command";
+import { RedosError, Err, Ok, Result } from "../../error-handling";
+import {
+  EventLoop,
+  IEventLoop,
+  LoopEvent,
+  LoopEventHandler,
+} from "../../event";
+import { Command } from "../command";
 import { commandsMap } from "../commands";
-import { RESP, RESPData, RESPParser, RESPType } from "../resp/parser";
+import { RESP, RESPData, parse } from "../resp/parser";
 import { CommandHandlerErrorKind } from "./handler.error";
 
 export interface CommandEvent {
+  connectionId: string;
   name: CommandName;
   args: string[];
   handler: CommandEventHandler;
@@ -19,30 +25,42 @@ export enum CommandName {
 
 export const handleCommand = (
   input: Buffer,
-  parseFunc: RESPParser,
-  eventLoop: EventLoop,
-): void => {
-  const parsedResp: RESP[] = parseFunc(input);
-  const commands: CommandEvent[] = mapRESPToCommandEvents(parsedResp);
+  connectionId: string,
+  eventLoop: IEventLoop,
+): Result<null, RedosError> => {
+  const parsedResp: RESP[] = parse(input);
+  const commands: Result<CommandEvent[], RedosError> = mapRESPToCommandEvents(
+    parsedResp,
+    connectionId,
+  );
 
-  // for (const command of commands) {
-  //   eventLoop.addEvent({
-  //     object: command,
-  //     handler: eventCommandHandler,
-  //     isAsync: false,
-  //   });
-  // }
+  if (commands.isOk()) {
+    commands.value.forEach((command: CommandEvent) => {
+      const event: LoopEvent<CommandEvent> = {
+        object: command,
+        isAsync: false,
+        handler: command.handler,
+      };
+
+      eventLoop.addEvent(event);
+    });
+
+    return Ok(null);
+  } else {
+    return Err(commands.error);
+  }
 };
 
 export interface CommandEventHandler extends LoopEventHandler<CommandEvent> {
-  (data: CommandEvent): void;
+  (data: CommandEvent, eventLoop: IEventLoop): void;
 }
 
 // TODO: Should error in parsing one command fail the whole process?
 // TODO: Should we flatten sets / arrays before mapping them?
-export const mapRESPToCommandEvents = (
+const mapRESPToCommandEvents = (
   resp: RESP[],
-): Result<CommandEvent[], CustomError> => {
+  connectionId: string,
+): Result<CommandEvent[], RedosError> => {
   let cursor: number = 0;
   const commandEvents: CommandEvent[] = [];
   for (const element of resp) {
@@ -50,13 +68,18 @@ export const mapRESPToCommandEvents = (
     //   parseArrayCommands(element.data as RESP[]);
     // }
 
-    const commandResult: Result<Command, CustomError> = getCommand(element);
+    const commandResult: Result<Command, RedosError> = getCommand(element);
     if (commandResult.isOk()) {
       const command: Command = commandResult.unwrap();
       const { args, cursorPosition } = getCommandArguments(resp, cursor);
+
+      // TODO: Separate RESPData from args passed to command events
+      const argsStr = args.map((value: RESPData) => value!.toString());
+
       commandEvents.push({
+        connectionId,
         name: command.name as CommandName,
-        args,
+        args: argsStr,
         handler: command.handler,
       });
 
@@ -68,7 +91,7 @@ export const mapRESPToCommandEvents = (
   }
 
   return Err(
-    new CustomError(
+    new RedosError(
       `No commands to process: ${resp}`,
       CommandHandlerErrorKind.NO_NEXT_ELEMENT,
     ),
@@ -96,10 +119,10 @@ const getCommandArguments = (
 const peekNextElement = (
   resp: RESP[],
   cursor: number,
-): Result<RESP, CustomError> => {
+): Result<RESP, RedosError> => {
   if (cursor >= resp.length - 1) {
     Err(
-      new CustomError(
+      new RedosError(
         `Cursor outside of bounds`,
         CommandHandlerErrorKind.NO_NEXT_ELEMENT,
       ),
@@ -109,13 +132,13 @@ const peekNextElement = (
   return Ok(resp[cursor + 1]);
 };
 
-const getCommand = (resp: RESP): Result<Command, CustomError> => {
+const getCommand = (resp: RESP): Result<Command, RedosError> => {
   const command: Command | undefined = commandsMap.get(
     resp.data as CommandName,
   );
   if (command === undefined) {
     return Err(
-      new CustomError(
+      new RedosError(
         `Unsupported command: ${resp.data}`,
         CommandHandlerErrorKind.NOT_A_VALID_COMMAND,
       ),
@@ -130,55 +153,30 @@ const isCommand = (resp: RESP): boolean => {
 };
 
 // TODO: https://github.com/redis/redis/blob/unstable/src/networking.c#L2618
-const parseArrayCommands = (
-  elements: RESP[],
-): Result<Command[], CustomError> => {
-  if (elements.length === undefined || elements.length === 0) {
-    return Err(
-      new CustomError(
-        `Set of commands empty or undefined: ${resp.raw}`,
-        CommandHandlerErrorKind.NOT_A_VALID_COMMAND,
-      ),
-    );
-  }
-
-  let cursor: number = 0;
-  for (const element of elements) {
-    const commandResult: Result<Command, CustomError> = getCommand(element);
-    if (commandResult.isOk()) {
-      const command: Command = commandResult.value;
-      const arguments: CommandArgument[] = [];
-    }
-
-    // TODO: Better mechanism for unwrapping results and bubbling up errors
-    if (commandResult.isErr()) {
-      return Err(commandResult.error);
-    }
-  }
-  return Ok([]);
-};
-
-// const mapRESPToCommandEvent = (
-//   resp: RESP,
-// ): Result<CommandEvent, CustomError> => {
-//   if (resp.type === RESPType.ARRAY) {
-//   }
-//
-//   const data = resp.data as string;
-//   const splitResp: string[] = data.split(" ");
-//
-//   const name: CommandName | undefined = data[0] as CommandName;
-//   if (name === undefined) {
+// const parseArrayCommands = (
+//   elements: RESP[],
+// ): Result<Command[], RedosError> => {
+//   if (elements.length === undefined || elements.length === 0) {
 //     return Err(
-//       new CustomError(
-//         `Unsupported command: ${name}`,
-//         CommandHandlerErrorKind.NOT_A_VALID_COMMAND,),
+//       new RedosError(
+//         `Set of commands empty or undefined: ${resp.raw}`,
+//         CommandHandlerErrorKind.NOT_A_VALID_COMMAND,
+//       ),
 //     );
 //   }
 //
-//   return Ok({
-//     name,
-//     args: splitResp.slice(1),
-//     output: undefined,
-//   });
+//   let cursor: number = 0;
+//   for (const element of elements) {
+//     const commandResult: Result<Command, RedosError> = getCommand(element);
+//     if (commandResult.isOk()) {
+//       const command: Command = commandResult.value;
+//       const arguments: CommandArgument[] = [];
+//     }
+//
+//     // TODO: Better mechanism for unwrapping results and bubbling up errors
+//     if (commandResult.isErr()) {
+//       return Err(commandResult.error);
+//     }
+//   }
+//   return Ok([]);
 // };

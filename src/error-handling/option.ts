@@ -1,4 +1,4 @@
-import { CustomError } from "./error";
+import { RedosError } from "./error";
 
 export interface SomeType<T> {
   type: "some";
@@ -36,7 +36,7 @@ export function Some<T>(value: T): Option<T> {
 export const None: Option<never> = Object.freeze({
   type: "none",
   unwrap: () => {
-    throw new CustomError(
+    throw new RedosError(
       "Cannot unwrap None",
       OptionErrorKind.CANNOT_UNWRAP_NONE,
     );

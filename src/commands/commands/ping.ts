@@ -1,4 +1,9 @@
-import { Command, CommandArgument, CommandOutput } from "../command";
+import {
+  Command,
+  CommandArgument,
+  CommandArgumentType,
+  CommandOutput,
+} from "../command";
 import { CommandEvent, CommandEventHandler } from "../handler/handler";
 
 const pingHandler: CommandEventHandler = (
@@ -14,7 +19,7 @@ const pingHandler: CommandEventHandler = (
 const pingArguments: CommandArgument[] = [
   {
     name: "message",
-    type: "string",
+    type: CommandArgumentType.String,
     optional: true,
   },
 ];

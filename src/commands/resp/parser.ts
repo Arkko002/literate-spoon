@@ -1,4 +1,4 @@
-import { CustomError } from "../../error-handling";
+import { RedosError } from "../../error-handling";
 import { RESPErrorKind } from "./resp.error";
 
 export enum RESPType {
@@ -44,7 +44,7 @@ export const parse = (input: Buffer, commandsResult: RESP[] = []): RESP[] => {
   const lineEndIndex: number = getNextLineEndIndex(input, commandPointer);
   const respType: RESPType = input.toString("ascii", 0, 1) as RESPType;
   if (respType === undefined) {
-    throw new CustomError(
+    throw new RedosError(
       `Unsupported / invalid RESP type: ${input.toString("ascii")}`,
       RESPErrorKind.INVALID_RESP_TYPE,
     );
@@ -112,14 +112,14 @@ export const parse = (input: Buffer, commandsResult: RESP[] = []): RESP[] => {
 const getNextLineEndIndex = (resp: Buffer, startIndex: number): number => {
   const lineEndIndex: number = resp.indexOf(RF, startIndex);
   if (lineEndIndex === -1) {
-    throw new CustomError(
+    throw new RedosError(
       `Invalid carriage return: ${resp.toString("ascii")}`,
       RESPErrorKind.INVALID_CARRIAGE_RETURN,
     );
   }
 
   if (resp[lineEndIndex - 1] !== CL[0]) {
-    throw new CustomError(
+    throw new RedosError(
       `Invalid carriage return: ${resp.toString("ascii")}`,
       RESPErrorKind.INVALID_CARRIAGE_RETURN,
     );
@@ -128,7 +128,7 @@ const getNextLineEndIndex = (resp: Buffer, startIndex: number): number => {
   // NOTE: Covers cases like $5\rhello\r\n and $5\r\nhe\rlo\r\n
   const carriageReturnIndex: number = resp.indexOf(CL, startIndex);
   if (carriageReturnIndex !== lineEndIndex - 1) {
-    throw new CustomError(
+    throw new RedosError(
       `Invalid carriage return: ${resp.toString("ascii")}`,
       RESPErrorKind.INVALID_CARRIAGE_RETURN,
     );
@@ -151,7 +151,7 @@ const parseBulkString = (
     bulkStringLengthData.length === 0 ||
     bulkStringLength < -1
   ) {
-    throw new CustomError(
+    throw new RedosError(
       `Invalid bulk string length: ${input.toString("ascii")}`,
       RESPErrorKind.BULK_STRING_DECLARED_LENGTH_WRONG,
     );
@@ -175,7 +175,7 @@ const parseBulkString = (
       nextCommandPointer: lineEndIndex + 3,
     };
   } else if (input.length < lineEndIndex + bulkStringLength) {
-    throw new CustomError(
+    throw new RedosError(
       `Not enough data for bulk string: ${input.toString("ascii")}`,
       RESPErrorKind.BULK_STRING_NOT_ENOUGH_DATA,
     );
@@ -192,7 +192,7 @@ const parseBulkString = (
     );
 
     if (bulkString.length !== bulkStringLength) {
-      throw new CustomError(
+      throw new RedosError(
         `Bulk string declared length wrong: ${input.toString("ascii")}`,
         RESPErrorKind.BULK_STRING_DECLARED_LENGTH_WRONG,
       );
@@ -218,7 +218,7 @@ const parseInteger = (
 ): RESPPartial => {
   const data: number = Number(respData.toString("ascii"));
   if (Number.isNaN(data) || respData.length === 0) {
-    throw new CustomError(
+    throw new RedosError(
       `Invalid integer: ${input.toString("ascii")}`,
       RESPErrorKind.INTEGER_NOT_NUMBER,
     );
@@ -243,7 +243,7 @@ const parseArray = (
 ): RESPPartial => {
   const arrayLength: number = Number(respData.toString("ascii"));
   if (Number.isNaN(arrayLength) || respData.length === 0 || arrayLength < -1) {
-    throw new CustomError(
+    throw new RedosError(
       `Invalid array length: ${input.toString("ascii")}`,
       RESPErrorKind.ARRAY_DECLARED_LENGTH_WRONG,
     );

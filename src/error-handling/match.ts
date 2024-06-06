@@ -1,9 +1,9 @@
-import { CustomError } from "./error";
+import { RedosError } from "./error";
 import { Result } from "./result";
 import { Option } from "./option";
 
 // TODO:
-export interface MatchResult<T, E extends CustomError> {
+export interface MatchResult<T, E extends RedosError> {
   match<R>(
     this: Result<T, E>,
     handlers: {

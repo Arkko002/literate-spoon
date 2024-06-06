@@ -35,11 +35,6 @@ export type CommandArgumentValueType =
   | "boolean"
   | "unix-time";
 
-// TODO: This only a compile time check, good for libs but not usable in our case, I think?
-export type MaximumOneOf<T, K extends keyof T = keyof T> = K extends keyof T
-  ? { [P in K]?: T[K] } & Partial<Record<Exclude<keyof T, K>, never>>
-  : never;
-
 export interface CommandOutput<T> {
   output: T | null;
 }

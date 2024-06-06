@@ -5,17 +5,21 @@ export interface IEventLoop {
 }
 
 // TODO: 1. Start with blocking operations
-
 // TODO: Implement all queues and maintanance tasks
 // https://github.com/redis/redis/blob/unstable/src/ae.c#L342
 // TODO: Implement timed events: https://redis.io/docs/latest/operate/oss_and_stack/reference/internals/internals-rediseventlib/
 export class EventLoop implements IEventLoop {
+  private static _instance: EventLoop;
   private stop: boolean;
   private events: LoopEvent<any>[];
 
-  constructor() {
+  private constructor() {
     this.events = [];
     this.stop = false;
+  }
+
+  public static get Instance(): IEventLoop {
+    return this._instance || (this._instance = new EventLoop());
   }
 
   public addEvent(event: LoopEvent<any>): void {
@@ -63,13 +67,14 @@ export interface LoopEventHandler<T> {
   (data: T, eventLoop: IEventLoop): void;
 }
 
-export interface StopLoopEventHandler extends LoopEventHandler<EventLoop> {
+interface StopLoopEventHandler extends LoopEventHandler<EventLoop> {
   (eventLoop: EventLoop): void;
 }
 
-export const stopEventLoopHandler: StopLoopEventHandler = (
-  eventLoop: EventLoop,
-) => {
+const stopEventLoopHandler: StopLoopEventHandler = (eventLoop: EventLoop) => {
   console.log(`Event loop stopped`);
   eventLoop.stopProcessingLoop();
 };
+
+const eventLoop: IEventLoop = EventLoop.Instance;
+export default eventLoop;

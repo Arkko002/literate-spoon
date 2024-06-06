@@ -1,0 +1,2461 @@
+{
+  "numFailedTestSuites": 3,
+  "numFailedTests": 3,
+  "numPassedTestSuites": 0,
+  "numPassedTests": 16,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 2,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 3,
+  "numTotalTests": 19,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1716732175966,
+  "success": false,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "Error parser"
+          ],
+          "duration": 5,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Error parser it parses error buffer",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 4,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "it parses error buffer"
+        },
+        {
+          "ancestorTitles": [
+            "Integer parser"
+          ],
+          "duration": 0,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Integer parser it parses integer buffer",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "it parses integer buffer"
+        },
+        {
+          "ancestorTitles": [
+            "Integer parser"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Integer parser it throws an error on empty signed integer",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "it throws an error on empty signed integer"
+        },
+        {
+          "ancestorTitles": [
+            "Integer parser"
+          ],
+          "duration": 0,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Integer parser it throws an error on empty integer buffer",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "it throws an error on empty integer buffer"
+        },
+        {
+          "ancestorTitles": [
+            "Integer parser"
+          ],
+          "duration": 0,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Integer parser it throws an error when integer is not a number",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "it throws an error when integer is not a number"
+        },
+        {
+          "ancestorTitles": [
+            "Bulk string parser"
+          ],
+          "duration": 0,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Bulk string parser it parses bulk string buffer",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 4,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "it parses bulk string buffer"
+        },
+        {
+          "ancestorTitles": [
+            "Bulk string parser"
+          ],
+          "duration": 0,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Bulk string parser it parses empty bulk string buffer",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 4,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "it parses empty bulk string buffer"
+        },
+        {
+          "ancestorTitles": [
+            "Bulk string parser"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Bulk string parser it parses null bulk string buffer",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 4,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "it parses null bulk string buffer"
+        },
+        {
+          "ancestorTitles": [
+            "Bulk string parser"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Bulk string parser it throws an error when not enough data in buffer",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "it throws an error when not enough data in buffer"
+        },
+        {
+          "ancestorTitles": [
+            "Bulk string parser"
+          ],
+          "duration": 5,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Bulk string parser it throws an error when declared length is wrong",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "it throws an error when declared length is wrong"
+        },
+        {
+          "ancestorTitles": [
+            "Array parser"
+          ],
+          "duration": 3,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Array parser it parses array buffer",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 4,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "it parses array buffer"
+        },
+        {
+          "ancestorTitles": [
+            "Array parser"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Array parser it parses empty array buffer",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 4,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "it parses empty array buffer"
+        },
+        {
+          "ancestorTitles": [
+            "Array parser"
+          ],
+          "duration": 0,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Array parser it parses null array buffer",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 4,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "it parses null array buffer"
+        },
+        {
+          "ancestorTitles": [
+            "Array parser"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Array parser it throws an error when length is not a number",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "it throws an error when length is not a number"
+        },
+        {
+          "ancestorTitles": [
+            "Array parser"
+          ],
+          "duration": 2,
+          "failureDetails": [
+            {
+              "matcherResult": {
+                "actual": 0,
+                "expected": 7,
+                "message": "\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m7\u001b[39m\nReceived: \u001b[31m0\u001b[39m",
+                "name": "toBe",
+                "pass": false
+              }
+            }
+          ],
+          "failureMessages": [
+            "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m7\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n    at Object.<anonymous> (/home/void/Projects/redos/dist/src/commands/resp/resp.spec.js:186:47)\n    at Promise.then.completed (/home/void/Projects/redos/node_modules/jest-circus/build/utils.js:298:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (/home/void/Projects/redos/node_modules/jest-circus/build/utils.js:231:10)\n    at _callCircusTest (/home/void/Projects/redos/node_modules/jest-circus/build/run.js:316:40)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async _runTest (/home/void/Projects/redos/node_modules/jest-circus/build/run.js:252:3)\n    at async _runTestsForDescribeBlock (/home/void/Projects/redos/node_modules/jest-circus/build/run.js:126:9)\n    at async _runTestsForDescribeBlock (/home/void/Projects/redos/node_modules/jest-circus/build/run.js:121:9)\n    at async run (/home/void/Projects/redos/node_modules/jest-circus/build/run.js:71:3)\n    at async runAndTransformResultsToJestFormat (/home/void/Projects/redos/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)\n    at async jestAdapter (/home/void/Projects/redos/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)\n    at async runTestInternal (/home/void/Projects/redos/node_modules/jest-runner/build/runTest.js:367:16)\n    at async runTest (/home/void/Projects/redos/node_modules/jest-runner/build/runTest.js:444:34)"
+          ],
+          "fullName": "Array parser it throws an error on invalid carriage return in last element",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "failed",
+          "title": "it throws an error on invalid carriage return in last element"
+        },
+        {
+          "ancestorTitles": [
+            "Array parser"
+          ],
+          "duration": 1,
+          "failureDetails": [
+            {
+              "matcherResult": {
+                "actual": 0,
+                "expected": 7,
+                "message": "\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m7\u001b[39m\nReceived: \u001b[31m0\u001b[39m",
+                "name": "toBe",
+                "pass": false
+              }
+            }
+          ],
+          "failureMessages": [
+            "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m7\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n    at Object.<anonymous> (/home/void/Projects/redos/dist/src/commands/resp/resp.spec.js:198:47)\n    at Promise.then.completed (/home/void/Projects/redos/node_modules/jest-circus/build/utils.js:298:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (/home/void/Projects/redos/node_modules/jest-circus/build/utils.js:231:10)\n    at _callCircusTest (/home/void/Projects/redos/node_modules/jest-circus/build/run.js:316:40)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async _runTest (/home/void/Projects/redos/node_modules/jest-circus/build/run.js:252:3)\n    at async _runTestsForDescribeBlock (/home/void/Projects/redos/node_modules/jest-circus/build/run.js:126:9)\n    at async _runTestsForDescribeBlock (/home/void/Projects/redos/node_modules/jest-circus/build/run.js:121:9)\n    at async run (/home/void/Projects/redos/node_modules/jest-circus/build/run.js:71:3)\n    at async runAndTransformResultsToJestFormat (/home/void/Projects/redos/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)\n    at async jestAdapter (/home/void/Projects/redos/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)\n    at async runTestInternal (/home/void/Projects/redos/node_modules/jest-runner/build/runTest.js:367:16)\n    at async runTest (/home/void/Projects/redos/node_modules/jest-runner/build/runTest.js:444:34)"
+          ],
+          "fullName": "Array parser it throws an error on invalid carriage return inside of array",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "failed",
+          "title": "it throws an error on invalid carriage return inside of array"
+        },
+        {
+          "ancestorTitles": [
+            "Simple string parser"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Simple string parser it parses simple string buffer",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 4,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "it parses simple string buffer"
+        },
+        {
+          "ancestorTitles": [
+            "Simple string parser"
+          ],
+          "duration": 0,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Simple string parser it throws an error on invalid carriage return",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "it throws an error on invalid carriage return"
+        },
+        {
+          "ancestorTitles": [
+            "Simple string parser"
+          ],
+          "duration": 0,
+          "failureDetails": [
+            {
+              "matcherResult": {
+                "actual": 0,
+                "expected": 2,
+                "message": "\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m2\u001b[39m\nReceived: \u001b[31m0\u001b[39m",
+                "name": "toBe",
+                "pass": false
+              }
+            }
+          ],
+          "failureMessages": [
+            "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m2\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n    at Object.<anonymous> (/home/void/Projects/redos/dist/src/commands/resp/resp.spec.js:234:47)\n    at Promise.then.completed (/home/void/Projects/redos/node_modules/jest-circus/build/utils.js:298:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (/home/void/Projects/redos/node_modules/jest-circus/build/utils.js:231:10)\n    at _callCircusTest (/home/void/Projects/redos/node_modules/jest-circus/build/run.js:316:40)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async _runTest (/home/void/Projects/redos/node_modules/jest-circus/build/run.js:252:3)\n    at async _runTestsForDescribeBlock (/home/void/Projects/redos/node_modules/jest-circus/build/run.js:126:9)\n    at async _runTestsForDescribeBlock (/home/void/Projects/redos/node_modules/jest-circus/build/run.js:121:9)\n    at async run (/home/void/Projects/redos/node_modules/jest-circus/build/run.js:71:3)\n    at async runAndTransformResultsToJestFormat (/home/void/Projects/redos/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)\n    at async jestAdapter (/home/void/Projects/redos/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)\n    at async runTestInternal (/home/void/Projects/redos/node_modules/jest-runner/build/runTest.js:367:16)\n    at async runTest (/home/void/Projects/redos/node_modules/jest-runner/build/runTest.js:444:34)"
+          ],
+          "fullName": "Simple string parser it throws an error if data contains carriage return",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "failed",
+          "title": "it throws an error if data contains carriage return"
+        }
+      ],
+      "endTime": 1716732176206,
+      "message": "\u001b[1m\u001b[31m  \u001b[1m● \u001b[22m\u001b[1mArray parser › it throws an error on invalid carriage return in last element\u001b[39m\u001b[22m\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\n    Expected: \u001b[32m7\u001b[39m\n    Received: \u001b[31m0\u001b[39m\n\u001b[2m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 184 |\u001b[39m             \u001b[36mconst\u001b[39m error \u001b[33m=\u001b[39m er\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 185 |\u001b[39m             (\u001b[35m0\u001b[39m\u001b[33m,\u001b[39m globals_1\u001b[33m.\u001b[39mexpect)(error)\u001b[33m.\u001b[39mtoBeInstanceOf(error_1\u001b[33m.\u001b[39m\u001b[33mRESPError\u001b[39m)\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m    \u001b[31m\u001b[1m>\u001b[22m\u001b[2m\u001b[39m\u001b[90m 186 |\u001b[39m             (\u001b[35m0\u001b[39m\u001b[33m,\u001b[39m globals_1\u001b[33m.\u001b[39mexpect)(error\u001b[33m.\u001b[39mkind)\u001b[33m.\u001b[39mtoBe(error_1\u001b[33m.\u001b[39m\u001b[33mRESPErrorKind\u001b[39m\u001b[33m.\u001b[39m\u001b[33mARRAY_DECLARED_LENGTH_WRONG\u001b[39m)\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m     |\u001b[39m                                               \u001b[31m\u001b[1m^\u001b[22m\u001b[2m\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 187 |\u001b[39m         }\u001b[22m\n\u001b[2m     \u001b[90m 188 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 189 |\u001b[39m     (\u001b[35m0\u001b[39m\u001b[33m,\u001b[39m globals_1\u001b[33m.\u001b[39mtest)(\u001b[32m\"it throws an error on invalid carriage return inside of array\"\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\u001b[0m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Object.<anonymous> (\u001b[22m\u001b[2m\u001b[0m\u001b[36mdist/src/commands/resp/resp.spec.js\u001b[39m\u001b[0m\u001b[2m:186:47)\u001b[22m\u001b[2m\u001b[22m\n\n\u001b[1m\u001b[31m  \u001b[1m● \u001b[22m\u001b[1mArray parser › it throws an error on invalid carriage return inside of array\u001b[39m\u001b[22m\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\n    Expected: \u001b[32m7\u001b[39m\n    Received: \u001b[31m0\u001b[39m\n\u001b[2m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 196 |\u001b[39m             \u001b[36mconst\u001b[39m error \u001b[33m=\u001b[39m er\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 197 |\u001b[39m             (\u001b[35m0\u001b[39m\u001b[33m,\u001b[39m globals_1\u001b[33m.\u001b[39mexpect)(error)\u001b[33m.\u001b[39mtoBeInstanceOf(error_1\u001b[33m.\u001b[39m\u001b[33mRESPError\u001b[39m)\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m    \u001b[31m\u001b[1m>\u001b[22m\u001b[2m\u001b[39m\u001b[90m 198 |\u001b[39m             (\u001b[35m0\u001b[39m\u001b[33m,\u001b[39m globals_1\u001b[33m.\u001b[39mexpect)(error\u001b[33m.\u001b[39mkind)\u001b[33m.\u001b[39mtoBe(error_1\u001b[33m.\u001b[39m\u001b[33mRESPErrorKind\u001b[39m\u001b[33m.\u001b[39m\u001b[33mARRAY_DECLARED_LENGTH_WRONG\u001b[39m)\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m     |\u001b[39m                                               \u001b[31m\u001b[1m^\u001b[22m\u001b[2m\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 199 |\u001b[39m         }\u001b[22m\n\u001b[2m     \u001b[90m 200 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 201 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Object.<anonymous> (\u001b[22m\u001b[2m\u001b[0m\u001b[36mdist/src/commands/resp/resp.spec.js\u001b[39m\u001b[0m\u001b[2m:198:47)\u001b[22m\u001b[2m\u001b[22m\n\n\u001b[1m\u001b[31m  \u001b[1m● \u001b[22m\u001b[1mSimple string parser › it throws an error if data contains carriage return\u001b[39m\u001b[22m\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\n    Expected: \u001b[32m2\u001b[39m\n    Received: \u001b[31m0\u001b[39m\n\u001b[2m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 232 |\u001b[39m             \u001b[36mconst\u001b[39m error \u001b[33m=\u001b[39m er\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 233 |\u001b[39m             (\u001b[35m0\u001b[39m\u001b[33m,\u001b[39m globals_1\u001b[33m.\u001b[39mexpect)(error)\u001b[33m.\u001b[39mtoBeInstanceOf(error_1\u001b[33m.\u001b[39m\u001b[33mRESPError\u001b[39m)\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m    \u001b[31m\u001b[1m>\u001b[22m\u001b[2m\u001b[39m\u001b[90m 234 |\u001b[39m             (\u001b[35m0\u001b[39m\u001b[33m,\u001b[39m globals_1\u001b[33m.\u001b[39mexpect)(error\u001b[33m.\u001b[39mkind)\u001b[33m.\u001b[39mtoBe(error_1\u001b[33m.\u001b[39m\u001b[33mRESPErrorKind\u001b[39m\u001b[33m.\u001b[39m\u001b[33mSTRING_WITH_CARRIAGE_RETURN\u001b[39m)\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m     |\u001b[39m                                               \u001b[31m\u001b[1m^\u001b[22m\u001b[2m\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 235 |\u001b[39m         }\u001b[22m\n\u001b[2m     \u001b[90m 236 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 237 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Object.<anonymous> (\u001b[22m\u001b[2m\u001b[0m\u001b[36mdist/src/commands/resp/resp.spec.js\u001b[39m\u001b[0m\u001b[2m:234:47)\u001b[22m\u001b[2m\u001b[22m\n",
+      "name": "/home/void/Projects/redos/dist/src/commands/resp/resp.spec.js",
+      "startTime": 1716732176012,
+      "status": "failed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [],
+      "coverage": {},
+      "endTime": 1716732177202,
+      "message": "  \u001b[1m● \u001b[22mTest suite failed to run\n\n    \u001b[96msrc/commands/resp/resp.spec.ts\u001b[0m:\u001b[93m3\u001b[0m:\u001b[93m29\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2307: \u001b[0mCannot find module '../../error' or its corresponding type declarations.\n\n    \u001b[7m3\u001b[0m import { CustomError } from \"../../error\";\n    \u001b[7m \u001b[0m \u001b[91m                            ~~~~~~~~~~~~~\u001b[0m\n",
+      "name": "/home/void/Projects/redos/src/commands/resp/resp.spec.ts",
+      "startTime": 1716732177202,
+      "status": "failed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [],
+      "coverage": {},
+      "endTime": 1716732177202,
+      "message": "  \u001b[1m● \u001b[22mTest suite failed to run\n\n    \u001b[96msrc/commands/handler/handler.spec.ts\u001b[0m:\u001b[93m3\u001b[0m:\u001b[93m37\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2724: \u001b[0m'\"./handler\"' has no exported member named 'mapRESPToCommandEvent'. Did you mean 'mapRESPToCommandEvents'?\n\n    \u001b[7m3\u001b[0m import { CommandEvent, CommandName, mapRESPToCommandEvent } from \"./handler\";\n    \u001b[7m \u001b[0m \u001b[91m                                    ~~~~~~~~~~~~~~~~~~~~~\u001b[0m\n\n      \u001b[96msrc/commands/handler/handler.ts\u001b[0m:\u001b[93m43\u001b[0m:\u001b[93m14\u001b[0m\n        \u001b[7m43\u001b[0m export const mapRESPToCommandEvents = (\n        \u001b[7m  \u001b[0m \u001b[96m             ~~~~~~~~~~~~~~~~~~~~~~\u001b[0m\n        'mapRESPToCommandEvents' is declared here.\n",
+      "name": "/home/void/Projects/redos/src/commands/handler/handler.spec.ts",
+      "startTime": 1716732177202,
+      "status": "failed",
+      "summary": ""
+    }
+  ],
+  "wasInterrupted": false,
+  "coverageMap": {
+    "/home/void/Projects/redos/dist/src/commands/resp/parser.js": {
+      "path": "/home/void/Projects/redos/dist/src/commands/resp/parser.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 2,
+            "column": 0
+          },
+          "end": {
+            "line": 2,
+            "column": 62
+          }
+        },
+        "1": {
+          "start": {
+            "line": 3,
+            "column": 0
+          },
+          "end": {
+            "line": 3,
+            "column": 55
+          }
+        },
+        "2": {
+          "start": {
+            "line": 4,
+            "column": 16
+          },
+          "end": {
+            "line": 4,
+            "column": 34
+          }
+        },
+        "3": {
+          "start": {
+            "line": 6,
+            "column": 0
+          },
+          "end": {
+            "line": 12,
+            "column": 51
+          }
+        },
+        "4": {
+          "start": {
+            "line": 7,
+            "column": 4
+          },
+          "end": {
+            "line": 7,
+            "column": 36
+          }
+        },
+        "5": {
+          "start": {
+            "line": 8,
+            "column": 4
+          },
+          "end": {
+            "line": 8,
+            "column": 28
+          }
+        },
+        "6": {
+          "start": {
+            "line": 9,
+            "column": 4
+          },
+          "end": {
+            "line": 9,
+            "column": 30
+          }
+        },
+        "7": {
+          "start": {
+            "line": 10,
+            "column": 4
+          },
+          "end": {
+            "line": 10,
+            "column": 34
+          }
+        },
+        "8": {
+          "start": {
+            "line": 11,
+            "column": 4
+          },
+          "end": {
+            "line": 11,
+            "column": 28
+          }
+        },
+        "9": {
+          "start": {
+            "line": 13,
+            "column": 13
+          },
+          "end": {
+            "line": 13,
+            "column": 32
+          }
+        },
+        "10": {
+          "start": {
+            "line": 14,
+            "column": 11
+          },
+          "end": {
+            "line": 14,
+            "column": 28
+          }
+        },
+        "11": {
+          "start": {
+            "line": 15,
+            "column": 11
+          },
+          "end": {
+            "line": 15,
+            "column": 28
+          }
+        },
+        "12": {
+          "start": {
+            "line": 20,
+            "column": 27
+          },
+          "end": {
+            "line": 147,
+            "column": 1
+          }
+        },
+        "13": {
+          "start": {
+            "line": 21,
+            "column": 4
+          },
+          "end": {
+            "line": 23,
+            "column": 5
+          }
+        },
+        "14": {
+          "start": {
+            "line": 22,
+            "column": 8
+          },
+          "end": {
+            "line": 22,
+            "column": 30
+          }
+        },
+        "15": {
+          "start": {
+            "line": 24,
+            "column": 25
+          },
+          "end": {
+            "line": 24,
+            "column": 26
+          }
+        },
+        "16": {
+          "start": {
+            "line": 25,
+            "column": 25
+          },
+          "end": {
+            "line": 25,
+            "column": 67
+          }
+        },
+        "17": {
+          "start": {
+            "line": 26,
+            "column": 21
+          },
+          "end": {
+            "line": 26,
+            "column": 50
+          }
+        },
+        "18": {
+          "start": {
+            "line": 27,
+            "column": 4
+          },
+          "end": {
+            "line": 29,
+            "column": 5
+          }
+        },
+        "19": {
+          "start": {
+            "line": 28,
+            "column": 8
+          },
+          "end": {
+            "line": 28,
+            "column": 140
+          }
+        },
+        "20": {
+          "start": {
+            "line": 30,
+            "column": 20
+          },
+          "end": {
+            "line": 30,
+            "column": 55
+          }
+        },
+        "21": {
+          "start": {
+            "line": 31,
+            "column": 21
+          },
+          "end": {
+            "line": 31,
+            "column": 56
+          }
+        },
+        "22": {
+          "start": {
+            "line": 32,
+            "column": 4
+          },
+          "end": {
+            "line": 145,
+            "column": 5
+          }
+        },
+        "23": {
+          "start": {
+            "line": 34,
+            "column": 12
+          },
+          "end": {
+            "line": 38,
+            "column": 15
+          }
+        },
+        "24": {
+          "start": {
+            "line": 39,
+            "column": 12
+          },
+          "end": {
+            "line": 39,
+            "column": 46
+          }
+        },
+        "25": {
+          "start": {
+            "line": 40,
+            "column": 12
+          },
+          "end": {
+            "line": 40,
+            "column": 18
+          }
+        },
+        "26": {
+          "start": {
+            "line": 43,
+            "column": 12
+          },
+          "end": {
+            "line": 47,
+            "column": 15
+          }
+        },
+        "27": {
+          "start": {
+            "line": 48,
+            "column": 12
+          },
+          "end": {
+            "line": 48,
+            "column": 46
+          }
+        },
+        "28": {
+          "start": {
+            "line": 49,
+            "column": 12
+          },
+          "end": {
+            "line": 49,
+            "column": 18
+          }
+        },
+        "29": {
+          "start": {
+            "line": 51,
+            "column": 12
+          },
+          "end": {
+            "line": 53,
+            "column": 13
+          }
+        },
+        "30": {
+          "start": {
+            "line": 52,
+            "column": 16
+          },
+          "end": {
+            "line": 52,
+            "column": 126
+          }
+        },
+        "31": {
+          "start": {
+            "line": 54,
+            "column": 12
+          },
+          "end": {
+            "line": 58,
+            "column": 13
+          }
+        },
+        "32": {
+          "start": {
+            "line": 57,
+            "column": 16
+          },
+          "end": {
+            "line": 57,
+            "column": 141
+          }
+        },
+        "33": {
+          "start": {
+            "line": 59,
+            "column": 25
+          },
+          "end": {
+            "line": 59,
+            "column": 59
+          }
+        },
+        "34": {
+          "start": {
+            "line": 60,
+            "column": 12
+          },
+          "end": {
+            "line": 62,
+            "column": 13
+          }
+        },
+        "35": {
+          "start": {
+            "line": 61,
+            "column": 16
+          },
+          "end": {
+            "line": 61,
+            "column": 133
+          }
+        },
+        "36": {
+          "start": {
+            "line": 63,
+            "column": 12
+          },
+          "end": {
+            "line": 63,
+            "column": 46
+          }
+        },
+        "37": {
+          "start": {
+            "line": 64,
+            "column": 12
+          },
+          "end": {
+            "line": 68,
+            "column": 15
+          }
+        },
+        "38": {
+          "start": {
+            "line": 69,
+            "column": 12
+          },
+          "end": {
+            "line": 69,
+            "column": 18
+          }
+        },
+        "39": {
+          "start": {
+            "line": 72,
+            "column": 37
+          },
+          "end": {
+            "line": 72,
+            "column": 71
+          }
+        },
+        "40": {
+          "start": {
+            "line": 73,
+            "column": 12
+          },
+          "end": {
+            "line": 75,
+            "column": 13
+          }
+        },
+        "41": {
+          "start": {
+            "line": 74,
+            "column": 16
+          },
+          "end": {
+            "line": 74,
+            "column": 159
+          }
+        },
+        "42": {
+          "start": {
+            "line": 76,
+            "column": 12
+          },
+          "end": {
+            "line": 107,
+            "column": 13
+          }
+        },
+        "43": {
+          "start": {
+            "line": 77,
+            "column": 16
+          },
+          "end": {
+            "line": 81,
+            "column": 19
+          }
+        },
+        "44": {
+          "start": {
+            "line": 82,
+            "column": 16
+          },
+          "end": {
+            "line": 82,
+            "column": 50
+          }
+        },
+        "45": {
+          "start": {
+            "line": 84,
+            "column": 17
+          },
+          "end": {
+            "line": 107,
+            "column": 13
+          }
+        },
+        "46": {
+          "start": {
+            "line": 85,
+            "column": 16
+          },
+          "end": {
+            "line": 89,
+            "column": 19
+          }
+        },
+        "47": {
+          "start": {
+            "line": 90,
+            "column": 16
+          },
+          "end": {
+            "line": 90,
+            "column": 50
+          }
+        },
+        "48": {
+          "start": {
+            "line": 92,
+            "column": 17
+          },
+          "end": {
+            "line": 107,
+            "column": 13
+          }
+        },
+        "49": {
+          "start": {
+            "line": 93,
+            "column": 16
+          },
+          "end": {
+            "line": 93,
+            "column": 158
+          }
+        },
+        "50": {
+          "start": {
+            "line": 96,
+            "column": 43
+          },
+          "end": {
+            "line": 96,
+            "column": 87
+          }
+        },
+        "51": {
+          "start": {
+            "line": 97,
+            "column": 35
+          },
+          "end": {
+            "line": 97,
+            "column": 100
+          }
+        },
+        "52": {
+          "start": {
+            "line": 98,
+            "column": 16
+          },
+          "end": {
+            "line": 100,
+            "column": 17
+          }
+        },
+        "53": {
+          "start": {
+            "line": 99,
+            "column": 20
+          },
+          "end": {
+            "line": 99,
+            "column": 170
+          }
+        },
+        "54": {
+          "start": {
+            "line": 101,
+            "column": 16
+          },
+          "end": {
+            "line": 101,
+            "column": 56
+          }
+        },
+        "55": {
+          "start": {
+            "line": 102,
+            "column": 16
+          },
+          "end": {
+            "line": 106,
+            "column": 19
+          }
+        },
+        "56": {
+          "start": {
+            "line": 108,
+            "column": 12
+          },
+          "end": {
+            "line": 108,
+            "column": 18
+          }
+        },
+        "57": {
+          "start": {
+            "line": 111,
+            "column": 32
+          },
+          "end": {
+            "line": 111,
+            "column": 66
+          }
+        },
+        "58": {
+          "start": {
+            "line": 112,
+            "column": 12
+          },
+          "end": {
+            "line": 142,
+            "column": 13
+          }
+        },
+        "59": {
+          "start": {
+            "line": 113,
+            "column": 16
+          },
+          "end": {
+            "line": 113,
+            "column": 147
+          }
+        },
+        "60": {
+          "start": {
+            "line": 115,
+            "column": 17
+          },
+          "end": {
+            "line": 142,
+            "column": 13
+          }
+        },
+        "61": {
+          "start": {
+            "line": 116,
+            "column": 16
+          },
+          "end": {
+            "line": 120,
+            "column": 19
+          }
+        },
+        "62": {
+          "start": {
+            "line": 121,
+            "column": 16
+          },
+          "end": {
+            "line": 121,
+            "column": 50
+          }
+        },
+        "63": {
+          "start": {
+            "line": 123,
+            "column": 17
+          },
+          "end": {
+            "line": 142,
+            "column": 13
+          }
+        },
+        "64": {
+          "start": {
+            "line": 124,
+            "column": 16
+          },
+          "end": {
+            "line": 128,
+            "column": 19
+          }
+        },
+        "65": {
+          "start": {
+            "line": 129,
+            "column": 16
+          },
+          "end": {
+            "line": 129,
+            "column": 50
+          }
+        },
+        "66": {
+          "start": {
+            "line": 132,
+            "column": 51
+          },
+          "end": {
+            "line": 132,
+            "column": 67
+          }
+        },
+        "67": {
+          "start": {
+            "line": 133,
+            "column": 16
+          },
+          "end": {
+            "line": 135,
+            "column": 17
+          }
+        },
+        "68": {
+          "start": {
+            "line": 133,
+            "column": 29
+          },
+          "end": {
+            "line": 133,
+            "column": 30
+          }
+        },
+        "69": {
+          "start": {
+            "line": 134,
+            "column": 20
+          },
+          "end": {
+            "line": 134,
+            "column": 112
+          }
+        },
+        "70": {
+          "start": {
+            "line": 136,
+            "column": 16
+          },
+          "end": {
+            "line": 136,
+            "column": 66
+          }
+        },
+        "71": {
+          "start": {
+            "line": 137,
+            "column": 16
+          },
+          "end": {
+            "line": 141,
+            "column": 19
+          }
+        },
+        "72": {
+          "start": {
+            "line": 143,
+            "column": 12
+          },
+          "end": {
+            "line": 143,
+            "column": 18
+          }
+        },
+        "73": {
+          "start": {
+            "line": 146,
+            "column": 4
+          },
+          "end": {
+            "line": 146,
+            "column": 91
+          }
+        },
+        "74": {
+          "start": {
+            "line": 148,
+            "column": 0
+          },
+          "end": {
+            "line": 148,
+            "column": 48
+          }
+        },
+        "75": {
+          "start": {
+            "line": 151,
+            "column": 28
+          },
+          "end": {
+            "line": 165,
+            "column": 1
+          }
+        },
+        "76": {
+          "start": {
+            "line": 152,
+            "column": 25
+          },
+          "end": {
+            "line": 152,
+            "column": 53
+          }
+        },
+        "77": {
+          "start": {
+            "line": 153,
+            "column": 4
+          },
+          "end": {
+            "line": 155,
+            "column": 5
+          }
+        },
+        "78": {
+          "start": {
+            "line": 154,
+            "column": 8
+          },
+          "end": {
+            "line": 154,
+            "column": 137
+          }
+        },
+        "79": {
+          "start": {
+            "line": 156,
+            "column": 4
+          },
+          "end": {
+            "line": 158,
+            "column": 5
+          }
+        },
+        "80": {
+          "start": {
+            "line": 157,
+            "column": 8
+          },
+          "end": {
+            "line": 157,
+            "column": 137
+          }
+        },
+        "81": {
+          "start": {
+            "line": 160,
+            "column": 32
+          },
+          "end": {
+            "line": 160,
+            "column": 60
+          }
+        },
+        "82": {
+          "start": {
+            "line": 161,
+            "column": 4
+          },
+          "end": {
+            "line": 163,
+            "column": 5
+          }
+        },
+        "83": {
+          "start": {
+            "line": 162,
+            "column": 8
+          },
+          "end": {
+            "line": 162,
+            "column": 137
+          }
+        },
+        "84": {
+          "start": {
+            "line": 164,
+            "column": 4
+          },
+          "end": {
+            "line": 164,
+            "column": 24
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 6,
+              "column": 1
+            },
+            "end": {
+              "line": 6,
+              "column": 2
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 6,
+              "column": 21
+            },
+            "end": {
+              "line": 12,
+              "column": 1
+            }
+          },
+          "line": 6
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 20,
+              "column": 27
+            },
+            "end": {
+              "line": 20,
+              "column": 28
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 20,
+              "column": 59
+            },
+            "end": {
+              "line": 147,
+              "column": 1
+            }
+          },
+          "line": 20
+        },
+        "2": {
+          "name": "(anonymous_2)",
+          "decl": {
+            "start": {
+              "line": 151,
+              "column": 28
+            },
+            "end": {
+              "line": 151,
+              "column": 29
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 151,
+              "column": 50
+            },
+            "end": {
+              "line": 165,
+              "column": 1
+            }
+          },
+          "line": 151
+        }
+      },
+      "branchMap": {
+        "0": {
+          "loc": {
+            "start": {
+              "line": 12,
+              "column": 3
+            },
+            "end": {
+              "line": 12,
+              "column": 49
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 12,
+                "column": 3
+              },
+              "end": {
+                "line": 12,
+                "column": 11
+              }
+            },
+            {
+              "start": {
+                "line": 12,
+                "column": 16
+              },
+              "end": {
+                "line": 12,
+                "column": 48
+              }
+            }
+          ],
+          "line": 12
+        },
+        "1": {
+          "loc": {
+            "start": {
+              "line": 20,
+              "column": 35
+            },
+            "end": {
+              "line": 20,
+              "column": 54
+            }
+          },
+          "type": "default-arg",
+          "locations": [
+            {
+              "start": {
+                "line": 20,
+                "column": 52
+              },
+              "end": {
+                "line": 20,
+                "column": 54
+              }
+            }
+          ],
+          "line": 20
+        },
+        "2": {
+          "loc": {
+            "start": {
+              "line": 21,
+              "column": 4
+            },
+            "end": {
+              "line": 23,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 21,
+                "column": 4
+              },
+              "end": {
+                "line": 23,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 21
+        },
+        "3": {
+          "loc": {
+            "start": {
+              "line": 27,
+              "column": 4
+            },
+            "end": {
+              "line": 29,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 27,
+                "column": 4
+              },
+              "end": {
+                "line": 29,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 27
+        },
+        "4": {
+          "loc": {
+            "start": {
+              "line": 32,
+              "column": 4
+            },
+            "end": {
+              "line": 145,
+              "column": 5
+            }
+          },
+          "type": "switch",
+          "locations": [
+            {
+              "start": {
+                "line": 33,
+                "column": 8
+              },
+              "end": {
+                "line": 41,
+                "column": 9
+              }
+            },
+            {
+              "start": {
+                "line": 42,
+                "column": 8
+              },
+              "end": {
+                "line": 49,
+                "column": 18
+              }
+            },
+            {
+              "start": {
+                "line": 50,
+                "column": 8
+              },
+              "end": {
+                "line": 70,
+                "column": 9
+              }
+            },
+            {
+              "start": {
+                "line": 71,
+                "column": 8
+              },
+              "end": {
+                "line": 109,
+                "column": 9
+              }
+            },
+            {
+              "start": {
+                "line": 110,
+                "column": 8
+              },
+              "end": {
+                "line": 144,
+                "column": 9
+              }
+            }
+          ],
+          "line": 32
+        },
+        "5": {
+          "loc": {
+            "start": {
+              "line": 51,
+              "column": 12
+            },
+            "end": {
+              "line": 53,
+              "column": 13
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 51,
+                "column": 12
+              },
+              "end": {
+                "line": 53,
+                "column": 13
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 51
+        },
+        "6": {
+          "loc": {
+            "start": {
+              "line": 54,
+              "column": 12
+            },
+            "end": {
+              "line": 58,
+              "column": 13
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 54,
+                "column": 12
+              },
+              "end": {
+                "line": 58,
+                "column": 13
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 54
+        },
+        "7": {
+          "loc": {
+            "start": {
+              "line": 54,
+              "column": 16
+            },
+            "end": {
+              "line": 56,
+              "column": 37
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 54,
+                "column": 17
+              },
+              "end": {
+                "line": 54,
+                "column": 57
+              }
+            },
+            {
+              "start": {
+                "line": 55,
+                "column": 16
+              },
+              "end": {
+                "line": 55,
+                "column": 56
+              }
+            },
+            {
+              "start": {
+                "line": 56,
+                "column": 16
+              },
+              "end": {
+                "line": 56,
+                "column": 37
+              }
+            }
+          ],
+          "line": 54
+        },
+        "8": {
+          "loc": {
+            "start": {
+              "line": 60,
+              "column": 12
+            },
+            "end": {
+              "line": 62,
+              "column": 13
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 60,
+                "column": 12
+              },
+              "end": {
+                "line": 62,
+                "column": 13
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 60
+        },
+        "9": {
+          "loc": {
+            "start": {
+              "line": 73,
+              "column": 12
+            },
+            "end": {
+              "line": 75,
+              "column": 13
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 73,
+                "column": 12
+              },
+              "end": {
+                "line": 75,
+                "column": 13
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 73
+        },
+        "10": {
+          "loc": {
+            "start": {
+              "line": 76,
+              "column": 12
+            },
+            "end": {
+              "line": 107,
+              "column": 13
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 76,
+                "column": 12
+              },
+              "end": {
+                "line": 107,
+                "column": 13
+              }
+            },
+            {
+              "start": {
+                "line": 84,
+                "column": 17
+              },
+              "end": {
+                "line": 107,
+                "column": 13
+              }
+            }
+          ],
+          "line": 76
+        },
+        "11": {
+          "loc": {
+            "start": {
+              "line": 84,
+              "column": 17
+            },
+            "end": {
+              "line": 107,
+              "column": 13
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 84,
+                "column": 17
+              },
+              "end": {
+                "line": 107,
+                "column": 13
+              }
+            },
+            {
+              "start": {
+                "line": 92,
+                "column": 17
+              },
+              "end": {
+                "line": 107,
+                "column": 13
+              }
+            }
+          ],
+          "line": 84
+        },
+        "12": {
+          "loc": {
+            "start": {
+              "line": 92,
+              "column": 17
+            },
+            "end": {
+              "line": 107,
+              "column": 13
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 92,
+                "column": 17
+              },
+              "end": {
+                "line": 107,
+                "column": 13
+              }
+            },
+            {
+              "start": {
+                "line": 95,
+                "column": 17
+              },
+              "end": {
+                "line": 107,
+                "column": 13
+              }
+            }
+          ],
+          "line": 92
+        },
+        "13": {
+          "loc": {
+            "start": {
+              "line": 98,
+              "column": 16
+            },
+            "end": {
+              "line": 100,
+              "column": 17
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 98,
+                "column": 16
+              },
+              "end": {
+                "line": 100,
+                "column": 17
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 98
+        },
+        "14": {
+          "loc": {
+            "start": {
+              "line": 112,
+              "column": 12
+            },
+            "end": {
+              "line": 142,
+              "column": 13
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 112,
+                "column": 12
+              },
+              "end": {
+                "line": 142,
+                "column": 13
+              }
+            },
+            {
+              "start": {
+                "line": 115,
+                "column": 17
+              },
+              "end": {
+                "line": 142,
+                "column": 13
+              }
+            }
+          ],
+          "line": 112
+        },
+        "15": {
+          "loc": {
+            "start": {
+              "line": 115,
+              "column": 17
+            },
+            "end": {
+              "line": 142,
+              "column": 13
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 115,
+                "column": 17
+              },
+              "end": {
+                "line": 142,
+                "column": 13
+              }
+            },
+            {
+              "start": {
+                "line": 123,
+                "column": 17
+              },
+              "end": {
+                "line": 142,
+                "column": 13
+              }
+            }
+          ],
+          "line": 115
+        },
+        "16": {
+          "loc": {
+            "start": {
+              "line": 123,
+              "column": 17
+            },
+            "end": {
+              "line": 142,
+              "column": 13
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 123,
+                "column": 17
+              },
+              "end": {
+                "line": 142,
+                "column": 13
+              }
+            },
+            {
+              "start": {
+                "line": 131,
+                "column": 17
+              },
+              "end": {
+                "line": 142,
+                "column": 13
+              }
+            }
+          ],
+          "line": 123
+        },
+        "17": {
+          "loc": {
+            "start": {
+              "line": 153,
+              "column": 4
+            },
+            "end": {
+              "line": 155,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 153,
+                "column": 4
+              },
+              "end": {
+                "line": 155,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 153
+        },
+        "18": {
+          "loc": {
+            "start": {
+              "line": 156,
+              "column": 4
+            },
+            "end": {
+              "line": 158,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 156,
+                "column": 4
+              },
+              "end": {
+                "line": 158,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 156
+        },
+        "19": {
+          "loc": {
+            "start": {
+              "line": 161,
+              "column": 4
+            },
+            "end": {
+              "line": 163,
+              "column": 5
+            }
+          },
+          "type": "if",
+          "locations": [
+            {
+              "start": {
+                "line": 161,
+                "column": 4
+              },
+              "end": {
+                "line": 163,
+                "column": 5
+              }
+            },
+            {
+              "start": {},
+              "end": {}
+            }
+          ],
+          "line": 161
+        }
+      },
+      "s": {
+        "0": 1,
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 1,
+        "6": 1,
+        "7": 1,
+        "8": 1,
+        "9": 1,
+        "10": 1,
+        "11": 1,
+        "12": 1,
+        "13": 33,
+        "14": 10,
+        "15": 23,
+        "16": 23,
+        "17": 21,
+        "18": 21,
+        "19": 0,
+        "20": 21,
+        "21": 21,
+        "22": 21,
+        "23": 2,
+        "24": 2,
+        "25": 2,
+        "26": 2,
+        "27": 2,
+        "28": 2,
+        "29": 5,
+        "30": 1,
+        "31": 4,
+        "32": 1,
+        "33": 3,
+        "34": 3,
+        "35": 1,
+        "36": 2,
+        "37": 2,
+        "38": 2,
+        "39": 6,
+        "40": 6,
+        "41": 0,
+        "42": 6,
+        "43": 1,
+        "44": 1,
+        "45": 5,
+        "46": 1,
+        "47": 1,
+        "48": 4,
+        "49": 1,
+        "50": 3,
+        "51": 3,
+        "52": 3,
+        "53": 1,
+        "54": 2,
+        "55": 2,
+        "56": 4,
+        "57": 6,
+        "58": 6,
+        "59": 1,
+        "60": 5,
+        "61": 1,
+        "62": 1,
+        "63": 4,
+        "64": 1,
+        "65": 1,
+        "66": 3,
+        "67": 3,
+        "68": 3,
+        "69": 8,
+        "70": 1,
+        "71": 1,
+        "72": 3,
+        "73": 13,
+        "74": 1,
+        "75": 1,
+        "76": 34,
+        "77": 34,
+        "78": 1,
+        "79": 33,
+        "80": 2,
+        "81": 31,
+        "82": 31,
+        "83": 1,
+        "84": 30
+      },
+      "f": {
+        "0": 1,
+        "1": 33,
+        "2": 34
+      },
+      "b": {
+        "0": [
+          1,
+          1
+        ],
+        "1": [
+          19
+        ],
+        "2": [
+          10,
+          23
+        ],
+        "3": [
+          0,
+          21
+        ],
+        "4": [
+          2,
+          2,
+          5,
+          6,
+          6
+        ],
+        "5": [
+          1,
+          4
+        ],
+        "6": [
+          1,
+          3
+        ],
+        "7": [
+          4,
+          3,
+          1
+        ],
+        "8": [
+          1,
+          2
+        ],
+        "9": [
+          0,
+          6
+        ],
+        "10": [
+          1,
+          5
+        ],
+        "11": [
+          1,
+          4
+        ],
+        "12": [
+          1,
+          3
+        ],
+        "13": [
+          1,
+          2
+        ],
+        "14": [
+          1,
+          5
+        ],
+        "15": [
+          1,
+          4
+        ],
+        "16": [
+          1,
+          3
+        ],
+        "17": [
+          1,
+          33
+        ],
+        "18": [
+          2,
+          31
+        ],
+        "19": [
+          1,
+          30
+        ]
+      },
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "132b85957ee35ff0538869f7110e399d64258994"
+    },
+    "/home/void/Projects/redos/dist/src/commands/resp/error.js": {
+      "path": "/home/void/Projects/redos/dist/src/commands/resp/error.js",
+      "statementMap": {
+        "0": {
+          "start": {
+            "line": 2,
+            "column": 0
+          },
+          "end": {
+            "line": 2,
+            "column": 62
+          }
+        },
+        "1": {
+          "start": {
+            "line": 3,
+            "column": 0
+          },
+          "end": {
+            "line": 3,
+            "column": 51
+          }
+        },
+        "2": {
+          "start": {
+            "line": 6,
+            "column": 8
+          },
+          "end": {
+            "line": 6,
+            "column": 23
+          }
+        },
+        "3": {
+          "start": {
+            "line": 7,
+            "column": 8
+          },
+          "end": {
+            "line": 7,
+            "column": 31
+          }
+        },
+        "4": {
+          "start": {
+            "line": 8,
+            "column": 8
+          },
+          "end": {
+            "line": 8,
+            "column": 25
+          }
+        },
+        "5": {
+          "start": {
+            "line": 11,
+            "column": 0
+          },
+          "end": {
+            "line": 11,
+            "column": 30
+          }
+        },
+        "6": {
+          "start": {
+            "line": 13,
+            "column": 0
+          },
+          "end": {
+            "line": 22,
+            "column": 66
+          }
+        },
+        "7": {
+          "start": {
+            "line": 14,
+            "column": 4
+          },
+          "end": {
+            "line": 14,
+            "column": 92
+          }
+        },
+        "8": {
+          "start": {
+            "line": 15,
+            "column": 4
+          },
+          "end": {
+            "line": 15,
+            "column": 80
+          }
+        },
+        "9": {
+          "start": {
+            "line": 16,
+            "column": 4
+          },
+          "end": {
+            "line": 16,
+            "column": 100
+          }
+        },
+        "10": {
+          "start": {
+            "line": 17,
+            "column": 4
+          },
+          "end": {
+            "line": 17,
+            "column": 72
+          }
+        },
+        "11": {
+          "start": {
+            "line": 18,
+            "column": 4
+          },
+          "end": {
+            "line": 18,
+            "column": 82
+          }
+        },
+        "12": {
+          "start": {
+            "line": 19,
+            "column": 4
+          },
+          "end": {
+            "line": 19,
+            "column": 100
+          }
+        },
+        "13": {
+          "start": {
+            "line": 20,
+            "column": 4
+          },
+          "end": {
+            "line": 20,
+            "column": 112
+          }
+        },
+        "14": {
+          "start": {
+            "line": 21,
+            "column": 4
+          },
+          "end": {
+            "line": 21,
+            "column": 100
+          }
+        }
+      },
+      "fnMap": {
+        "0": {
+          "name": "(anonymous_0)",
+          "decl": {
+            "start": {
+              "line": 5,
+              "column": 4
+            },
+            "end": {
+              "line": 5,
+              "column": 5
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 5,
+              "column": 31
+            },
+            "end": {
+              "line": 9,
+              "column": 5
+            }
+          },
+          "line": 5
+        },
+        "1": {
+          "name": "(anonymous_1)",
+          "decl": {
+            "start": {
+              "line": 13,
+              "column": 1
+            },
+            "end": {
+              "line": 13,
+              "column": 2
+            }
+          },
+          "loc": {
+            "start": {
+              "line": 13,
+              "column": 26
+            },
+            "end": {
+              "line": 22,
+              "column": 1
+            }
+          },
+          "line": 13
+        }
+      },
+      "branchMap": {
+        "0": {
+          "loc": {
+            "start": {
+              "line": 22,
+              "column": 3
+            },
+            "end": {
+              "line": 22,
+              "column": 64
+            }
+          },
+          "type": "binary-expr",
+          "locations": [
+            {
+              "start": {
+                "line": 22,
+                "column": 3
+              },
+              "end": {
+                "line": 22,
+                "column": 16
+              }
+            },
+            {
+              "start": {
+                "line": 22,
+                "column": 21
+              },
+              "end": {
+                "line": 22,
+                "column": 63
+              }
+            }
+          ],
+          "line": 22
+        }
+      },
+      "s": {
+        "0": 1,
+        "1": 1,
+        "2": 10,
+        "3": 10,
+        "4": 10,
+        "5": 1,
+        "6": 1,
+        "7": 1,
+        "8": 1,
+        "9": 1,
+        "10": 1,
+        "11": 1,
+        "12": 1,
+        "13": 1,
+        "14": 1
+      },
+      "f": {
+        "0": 10,
+        "1": 1
+      },
+      "b": {
+        "0": [
+          1,
+          1
+        ]
+      },
+      "inputSourceMap": null,
+      "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+      "hash": "9e271d0ff69594ea84685e490849290bd9566104"
+    }
+  }
+}

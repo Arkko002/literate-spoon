@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@jest/globals";
 import { RESP, RESPType, parseCommandBuffer } from "./parser";
-import { CustomError } from "../../error";
 import { RESPErrorKind } from "./resp.error";
+import { RedosError } from "../../error-handling";
 
 // TODO: Should edge cases of simple string also apply?
 describe("Error parser", () => {
@@ -40,8 +40,8 @@ describe("Integer parser", () => {
     try {
       parseCommandBuffer(respRaw);
     } catch (er) {
-      const error = er as CustomError;
-      expect(error).toBeInstanceOf(CustomError);
+      const error = er as RedosError;
+      expect(error).toBeInstanceOf(RedosError);
       expect(error.kind).toBe(RESPErrorKind.INTEGER_NOT_NUMBER);
     }
   });
@@ -53,8 +53,8 @@ describe("Integer parser", () => {
     try {
       parseCommandBuffer(respRaw);
     } catch (er) {
-      const error = er as CustomError;
-      expect(error).toBeInstanceOf(CustomError);
+      const error = er as RedosError;
+      expect(error).toBeInstanceOf(RedosError);
       expect(error.kind).toBe(RESPErrorKind.INTEGER_NOT_NUMBER);
     }
   });
@@ -65,8 +65,8 @@ describe("Integer parser", () => {
     try {
       parseCommandBuffer(respRaw);
     } catch (er) {
-      const error = er as CustomError;
-      expect(error).toBeInstanceOf(CustomError);
+      const error = er as RedosError;
+      expect(error).toBeInstanceOf(RedosError);
       expect(error.kind).toBe(RESPErrorKind.INTEGER_NOT_NUMBER);
     }
   });
@@ -119,8 +119,8 @@ describe("Bulk string parser", () => {
     try {
       parseCommandBuffer(respRaw);
     } catch (er) {
-      const error = er as CustomError;
-      expect(error).toBeInstanceOf(CustomError);
+      const error = er as RedosError;
+      expect(error).toBeInstanceOf(RedosError);
       expect(error.kind).toBe(RESPErrorKind.BULK_STRING_NOT_ENOUGH_DATA);
     }
   });
@@ -132,8 +132,8 @@ describe("Bulk string parser", () => {
     try {
       parseCommandBuffer(respRaw);
     } catch (er) {
-      const error = er as CustomError;
-      expect(error).toBeInstanceOf(CustomError);
+      const error = er as RedosError;
+      expect(error).toBeInstanceOf(RedosError);
       expect(error.kind).toBe(RESPErrorKind.BULK_STRING_DECLARED_LENGTH_WRONG);
     }
   });
@@ -145,8 +145,8 @@ describe("Bulk string parser", () => {
     try {
       parseCommandBuffer(respRaw);
     } catch (er) {
-      const error = er as CustomError;
-      expect(error).toBeInstanceOf(CustomError);
+      const error = er as RedosError;
+      expect(error).toBeInstanceOf(RedosError);
       expect(error.kind).toBe(RESPErrorKind.BULK_STRING_DECLARED_LENGTH_WRONG);
     }
   });
@@ -217,8 +217,8 @@ describe("Array parser", () => {
     try {
       parseCommandBuffer(arrayRaw);
     } catch (er) {
-      const error = er as CustomError;
-      expect(error).toBeInstanceOf(CustomError);
+      const error = er as RedosError;
+      expect(error).toBeInstanceOf(RedosError);
       expect(error.kind).toBe(RESPErrorKind.ARRAY_DECLARED_LENGTH_WRONG);
     }
   });
@@ -230,8 +230,8 @@ describe("Array parser", () => {
     try {
       parseCommandBuffer(arrayRaw);
     } catch (er) {
-      const error = er as CustomError;
-      expect(error).toBeInstanceOf(CustomError);
+      const error = er as RedosError;
+      expect(error).toBeInstanceOf(RedosError);
       expect(error.kind).toBe(RESPErrorKind.ARRAY_DECLARED_LENGTH_WRONG);
     }
   });
@@ -243,8 +243,8 @@ describe("Array parser", () => {
     try {
       parseCommandBuffer(arrayRaw);
     } catch (er) {
-      const error = er as CustomError;
-      expect(error).toBeInstanceOf(CustomError);
+      const error = er as RedosError;
+      expect(error).toBeInstanceOf(RedosError);
       expect(error.kind).toBe(RESPErrorKind.INVALID_CARRIAGE_RETURN);
     }
   });
@@ -256,8 +256,8 @@ describe("Array parser", () => {
     try {
       parseCommandBuffer(arrayRaw);
     } catch (er) {
-      const error = er as CustomError;
-      expect(error).toBeInstanceOf(CustomError);
+      const error = er as RedosError;
+      expect(error).toBeInstanceOf(RedosError);
       expect(error.kind).toBe(RESPErrorKind.INVALID_CARRIAGE_RETURN);
     }
   });
@@ -285,8 +285,8 @@ describe("Simple string parser", () => {
     try {
       parseCommandBuffer(respRaw);
     } catch (er) {
-      const error = er as CustomError;
-      expect(error).toBeInstanceOf(CustomError);
+      const error = er as RedosError;
+      expect(error).toBeInstanceOf(RedosError);
       expect(error.kind).toBe(RESPErrorKind.INVALID_CARRIAGE_RETURN);
     }
   });
@@ -298,8 +298,8 @@ describe("Simple string parser", () => {
     try {
       parseCommandBuffer(respRaw);
     } catch (er) {
-      const error = er as CustomError;
-      expect(error).toBeInstanceOf(CustomError);
+      const error = er as RedosError;
+      expect(error).toBeInstanceOf(RedosError);
       expect(error.kind).toBe(RESPErrorKind.INVALID_CARRIAGE_RETURN);
     }
   });
