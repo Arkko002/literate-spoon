@@ -11,7 +11,7 @@ export enum RESPType {
 
 export interface RESP {
   type: RESPType;
-  raw: Buffer;
+  raw: Buffer | undefined;
   data: RESPData;
 }
 

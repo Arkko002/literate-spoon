@@ -1,6 +1,6 @@
 import { Server, Socket } from "net";
 import eventLoop, { LoopEventHandler, LoopEvent, IEventLoop } from "../event";
-import { Connection } from "./connection";
+import { Connection, IConnectionOutput } from "./connection";
 import { Err, Ok, RedosError, Result } from "../error-handling";
 import { ServerErrorKind } from "./server.error";
 import { handleCommand } from "../commands";
@@ -64,31 +64,6 @@ class RedosServer implements IServer {
   }
 }
 
-interface SocketEventHandler extends LoopEventHandler<Connection> {
-  (data: Connection, eventLoop: IEventLoop): void;
-}
-
-const socketConnectionHandler: SocketEventHandler = (
-  connection: Connection,
-  eventLoop: IEventLoop,
-) => {
-  const data: Buffer | null = connection.read();
-
-  if (connection.isClosed()) {
-    return;
-  }
-
-  if (data) {
-    handleCommand(data, connection.id, eventLoop);
-  }
-
-  // TODO: Move connection scheduling to event loop, reschedule connections that were checked after all of them get checked
-  eventLoop.addEvent({
-    object: connection,
-    isAsync: false,
-    handler: socketConnectionHandler,
-  });
-};
 
 const server: IServer = RedosServer.Instance;
 export default server;
