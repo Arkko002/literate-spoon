@@ -5,6 +5,7 @@ import { DatabaseErrorKind } from "../db/db";
 import { ConnectionErrorKind } from "../server/connection.error";
 import { ServerErrorKind } from "../server/server.error";
 import { PubSubErrorKind } from "../stream/pubsub.error";
+import { StreamErrorKind } from "../stream/stream/stream.error";
 import { OptionErrorKind } from "./option";
 
 // TODO: Should this be used for both Result<err> and exceptions or only exceptions?
@@ -24,5 +25,6 @@ export type ErrorKind =
   | CommandsErrorKind
   | DatabaseErrorKind
   | PubSubErrorKind
+| StreamErrorKind
   | ConnectionErrorKind
   | ServerErrorKind;

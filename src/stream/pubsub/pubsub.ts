@@ -1,4 +1,5 @@
-import { Err, Ok, RedosError, Result } from "../error-handling";
+import { INotifier, ISubscriber } from "..";
+import { Err, Ok, RedosError, Result } from "../../error-handling";
 import { Connection } from "../server/connection";
 import { PubSubErrorKind } from "./pubsub.error";
 import { patternWriter, channelWriter } from "./pubsub.writer";
@@ -20,15 +21,6 @@ export interface IPubSubManager {
     connection: Connection,
     subscribe: SubscribeType,
   ): Result<null, RedosError>;
-}
-
-export interface ISubscriber {
-  notify(message: string, source?: string): void;
-}
-
-export interface INotifier {
-  subscribe(sub: ISubscriber): void;
-  unsubscribe(sub: ISubscriber): void;
 }
 
 export interface IPublishable {
